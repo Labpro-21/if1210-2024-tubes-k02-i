@@ -25,6 +25,3 @@ def LCG(batas_atas : int) -> int:
     global seed
     seed = (a*seed + c) % m
     return seed % (batas_atas + 1)
-
-x=LCG(100)
-print(x)
