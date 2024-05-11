@@ -35,36 +35,35 @@ def save(users : Data, item_inventories : Data, item_shop : Data, monster : Data
 #Fungsi ()
 #Deskripsi
 def data_save(path : str, nama_file : str, data : Data) -> None:
-#KAMUS LOKAL
     file_path = os.path.join(path, f"{nama_file}.csv")
+#KAMUS LOKAL
     # tulis header
     with open(file_path, 'w') as file:
         if nama_file == "item_inventory":
-            file.write("user_id;type;quantity\n")
+            header = "user_id;type;quantity\n"
         elif nama_file == "item_shop":
-            file.write("type;stock;price\n")
+            header = "type;stock;price\n"
         elif nama_file == "monster":
-            file.write("id;type;atk_power;def_power;hp\n")
+            header = "id;type;atk_power;def_power;hp\n"
         elif nama_file == "monster_inventory":
-            file.write("user_id;monster_id;level\n")
+            header = "user_id;monster_id;level\n"
         elif nama_file == "monster_shop":
-            file.write("monster_id;stock;price\n")
+            header = "monster_id;stock;price\n"
         elif nama_file == "user":
-            file.write("id;username;password;role;oc\n")
+            header = "id;username;password;role;oc\n"
+        file.write(header)
         
         # Tulis data ke file
         for baris in data:
-            line = ";".join(map(str, baris))  
+            line = ";".join(map(str, baris.values()))  
             file.write(line + "\n")
 
-
-# Contoh penggunaan
-users = [[1, 'Mr_Monogram', 'monogrammer77', 'admin', 0], [2, 'Asep_Spakbor', 'asepwow123', 'agent', 9999], [3, 'Agen_P', 'platypus123', 'agent', 0], [4, 'B4ngk1dd0ssss', 'bangkitganteng', 'agent', 1337], [5, 'Kenny_agen_rahasia', 'kribogeming55', 'agent', 6699], [6, 'bimo', 'gant3nk', 'agent', 0]]
-item_inventories = [[2, 'strength', 5], [2, 'resilience', 3], [3, 'resilience', 7], [4, 'healing', 3], [5, 'strength', 20]]
-item_shop = [[1, 10, 500], [2, 4, 700], [3, 3, 1000], [4, 8, 550], [5, 7, 600]]
-monster=[[1, 'Pikachow', 125, 10, 600], [2, 'Bulbu', 50, 50, 1200], [3, 'Zeze', 300, 10, 100], [4, 'Zuko', 100, 25, 800], [5, 'Chacha', 80, 30, 700]]
-monster_shop=[['strength', 10, 50], ['resilience', 5, 30], ['healing', 3, 20]]
-monster_inventory=[[2, 1, 1], [3, 2, 2], [3, 3, 1], [4, 4, 1], [5, 5, 5], [6, 4, 1], [7, 1, 1], [8, 1, 1], [9, 1, 1], [6, 1, 1]]
-
+#Contoh data
+users=[{'id': 1, 'username': 'Mr_Monogram', 'password': 'monogrammer77', 'role': 'admin', 'oc': 0}, {'id': 2, 'username': 'Asep_Spakbor', 'password': 'asepwow123', 'role': 'agent', 'oc': 9999,}, {'id': 3, 'username': 'Agen_P', 'password': 'platypus123', 'role': 'agent', 'oc': 0}, {'id': 4, 'username': 'B4ngk1dd0ssss', 'password': 'bangkitganteng', 'role': 'agent', 'oc': 1337}, {'id': 5, 'username': 'Kenny_agen_rahasia', 'password': 'kribogeming55', 'role': 'agent', 'oc': 6699}, {'id': 6, 'username': 'bimo', 'password': 'gant3nk', 'role': 'agent', 'oc': 0}]
+item_inventories=[{'user_id': 2, 'type': 'strength', 'quantity': 5}, {'user_id': 2, 'type': 'resilience', 'quantity': 3}, {'user_id': 3, 'type': 'resilience', 'quantity': 7}, {'user_id': 4, 'type': 'healing', 'quantity': 3}, {'user_id': 5, 'type': 'strength', 'quantity': 20}]
+item_shop=[{'type': 1, 'stock': 10, 'price': 500}, {'type': 2, 'stock': 4, 'price': 700}, {'type': 3, 'stock': 3, 'price': 1000}, {'type': 4, 'stock': 8, 'price': 550}, {'type': 5, 'stock': 7, 'price': 600}]
+monster=[{'id': 1, 'type': 'Pikachow', 'atk_power': 125, 'def_power': 10, 'hp': 600}, {'id': 2, 'type': 'Bulbu', 'atk_power': 50, 'def_power': 50, 'hp': 1200}, {'id': 3, 'type': 'Zeze', 'atk_power': 300, 'def_power': 10, 'hp': 100}, {'id': 4, 'type': 'Zuko', 'atk_power': 100, 'def_power': 25, 'hp': 800}, {'id': 5, 'type': 'Chacha', 'atk_power': 80, 'def_power': 30, 'hp': 700}]
+monster_shop=[{'monster_id': 4, 'stock': 10, 'price': 5000},{'monster_id': 1, 'stock': 5, 'price': 300},{'monster_id': 3, 'stock': 3, 'price': 2000}]
+monster_inventories=[{'user_id': 2, 'monster_id': 1, 'level': 1}, {'user_id': 3, 'monster_id': 2, 'level': 2}, {'user_id': 3, 'monster_id': 3, 'level': 1}, {'user_id': 4, 'monster_id': 4, 'level': 1}, {'user_id': 5, 'monster_id': 5, 'level': 5}, {'user_id': 6, 'monster_id': 4, 'level': 1}, {'user_id': 7, 'monster_id': 1, 'level': 1}, {'user_id': 8, 'monster_id': 1, 'level': 1}, {'user_id': 9, 'monster_id': 1, 'level': 1}, {'user_id': 6, 'monster_id': 1, 'level': 1}]
 # Panggil fungsi save dengan data yang diinginkan
-save(users, item_inventories, item_shop, monster, monster_shop, monster_inventory)
+save(users, item_inventories, item_shop, monster, monster_shop, monster_inventories)
