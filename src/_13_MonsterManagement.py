@@ -1,14 +1,17 @@
-
-def pilihan_monster_management(monster_list):
+def tampilan_awal():
     print("Selamat Datang Para Agen")
     print("Di sini adalah tempat database para monster.")
-    print("--------------------------------------------------")
+
+def pilihan_monster_management(monster_list):
+    print("-"*50)
     print("[1] Tampilkan semua monster yang ada")
     print("[2] Tambahkan monster baru")
-    pil = int(input("Anda ingin pilih yang mana? [] : "))
+    pil = int(input("Anda ingin pilih aksi mana (1/2)? [] : "))
     if pil==1 :
-        for i in range (len(monster_list)) :
-            print(monster_list[i])
+        print("ID |   Name/Type   | ATK Power | DEF Power | HP ")
+        print("-"*50)
+        for i in monster_list :
+            print("{:<3} | {:<13} | {:<9} | {:<3} ".format(*i))
         return False
     elif pil==2:
         return True
@@ -20,7 +23,7 @@ def cek_kesamaan_nama(monster_list, nama):
         else: 
             return False
 
-def tambah_monster_baru(monster_list):
+def tambah_monster_baru(monster_list, ID):
     if pilihan_monster_management==True :
         print("... Proses pembuatan monster baru dimulai ...")    
         print()
@@ -46,7 +49,9 @@ def tambah_monster_baru(monster_list):
         print()
         hp = int(input("Nilai HP Monster Baru: "))
 
-        monster_baru = [nama, Atk, defense, hp]
+        ID = len(monster_baru) + 1
+
+        monster_baru = [ID, nama, Atk, defense, hp]
         print()
         print("Monster baru berhasil dibuat!")
         return monster_baru
@@ -58,6 +63,5 @@ def tambah_monster_ke_database(monster_list,monster_baru):
         monster_list.append(monster_baru)
     elif pilihan == ("N" or "n") :
         print("Monster baru gagal ditambahkan ke database!")
-    for i in range (len(monster_list)) :
-        print(monster_list[i])
+   
  
