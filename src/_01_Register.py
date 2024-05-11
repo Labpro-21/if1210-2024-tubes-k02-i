@@ -5,13 +5,10 @@ import _02_Login
 # else:
 #     from . import CSVfunction
 
-
 user_data_path = r'if1210-2024-tubes-k02-i\data\user.csv'
-monster_data_path = r'if1210-2024-tubes-k02-i\data\monster.csv'
 monster_inventory_path = r'if1210-2024-tubes-k02-i\data\monster_inventory.csv'
 user_data = CSVfunction.read_csv(r'if1210-2024-tubes-k02-i\data\user.csv')
 monster_data = CSVfunction.read_csv(r'if1210-2024-tubes-k02-i\data\monster.csv')
-username = _02_Login.username
 
 # KAMUS
 def validate_username(username: str)->bool:
@@ -83,8 +80,8 @@ def register_page(game_state,username):
     if game_state == 0:
         if user_input():
             choose_monster(monster_data)
-            CSVfunction.write_csv(user_data_path, f'{len(user_data)+1};{username};{password};agent;0')
-            CSVfunction.write_csv(monster_inventory_path,f'{len(user_data)+1};{monster_id};{1}')
+            CSVfunction.write_csv(user_data_path, f'{len(user_data)+1};{username};{password};agent;{0}\n')
+            CSVfunction.write_csv(monster_inventory_path,f'{len(user_data)+1};{monster_id};{1}\n')
             game_state = 1
             return game_state
         else:
@@ -95,7 +92,7 @@ def register_page(game_state,username):
 
 if __name__ == '__main__':
     # print(game_state)
-    register_page(game_state,'') 
+    register_page(game_state,'bimo') 
     print(username)
     
 

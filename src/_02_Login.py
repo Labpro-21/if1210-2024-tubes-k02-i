@@ -1,8 +1,7 @@
 import CSVfunction as csv
-from GameState import game_state
+from GameState import game_state,username
 
 user_data = csv.read_csv(r'if1210-2024-tubes-k02-i\data\user.csv')
-username = ''
 
 def check_input(username: str, password:str)->bool:
     '''

@@ -59,8 +59,6 @@ def write_csv(file_path: str,data: str)->str:
     Menuliskan data ke file csv
     """
     with open(file_path, 'a') as csvfile:
-        if csvfile.tell() != 0:
-            csvfile.write('\n')
         csvfile.write(data)
         
 def join_array(data:list[str])->str:

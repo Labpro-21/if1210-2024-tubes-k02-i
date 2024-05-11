@@ -1,5 +1,5 @@
 
-### IMPORTING SOME MODULES ###
+####################################### IMPORTING SOME MODULES ######################################
 import sys
 sys.path.append('if1210-2024-tubes-k02-i\src')
 
@@ -27,17 +27,24 @@ from src import (
     DesignUtilities as design,
     
 )
-from src.GameState import game_state, username
+from src.GameState import game_state, username #const
 
+####################################### IMPORTING SOME MODULES ######################################
 def delay():
+    '''
+    Membuat delay pada screen dan clear screen di terminal
+    '''
     time.sleep(3)
     os.system('cls')
     
+################################ START MENU ####################################### 
 def start_menu():
-    global game_exit
+    '''
+    Menu awal yang ditampilkan ketika memulai game
+    '''
     global game_state
     global username
-    design.print_centered(design.login_interface())
+    design.print_centered_start(design.start_menu_interface())
     command = input('Masukkan command (lowercase): ')
     # print(game_state)
     if command == 'login':
@@ -45,43 +52,66 @@ def start_menu():
         game_state = login.game_state
         username = login.username
         delay()
-        return command
     elif command == 'help':
-        return command
+        menu_and_help.help_menu(username)
+        delay()
+        start_menu()
     elif command == 'register':
         register.register_page(game_state,username)
         delay()
-        return command
     elif command == 'menu':
-        return command
+        if game_state == 1:
+            print('Anda akan masuk ke main menu! Selamat datang pejuang.')
+            delay()
+            return main_menu(username)
+        else:
+            print('Anda belum login! silahkan login terlebih dahulu.')
+            delay()
     elif command == 'logout':
         logout.logout(game_state)
         game_state = logout.game_state
         delay()
-        return command
     elif command == 'exit':
         exit_module.game_exit(username)
-        return command
     else:
         print('Perintah anda salah, ulangi!')
         delay()
     return start_menu()
+################################ START MENU ####################################### 
+################################ MAIN MENU ######################################## 
+def main_menu(username):
+    '''
+    Menu ketika menampilkan game
+    '''
+    username = username
+    design.print_centered_menu(design.ascii_art())
+    command = input('Masukkan command (lowercase): ')
+    if command == 'inventory':
+        inventory.user_inventory(username)
+        delay()
+    elif command == 'battle':
+        pass
+        
+    elif command == 'arena':
+        pass
+    elif command == 'laboratory':
+        pass
+    elif command == 'back':
+        print('Akan kembali ke start menu.')
+        delay()
+        return start_menu()
+    else:
+        print('Perintah anda salah, ulangi!')
+        delay()
+    # 1. inventory
+    # 2. battle
+    # 3. arena
+    # 4. laboratory
+    # 5. shop
+    return main_menu(username)
+################################ MAIN MENU ######################################## 
 
-def main_menu():
-    pass
+################################ GAME START ########################################
+start_menu()
 
-### IMPORTING SOME MODULES ###
 
-#### START MENU ####
-stage = "menu"
-game_exit = False
-while not game_exit:
-    start_menu()
-    if stage == "exit":
-        game_exit = True
-
-#### START MENU ####
-
-### MAIN MENU ###
-
-### MAIN MENU ###
