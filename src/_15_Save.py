@@ -33,31 +33,31 @@ memeriksa apakah folder yang dimaksud sudah ada dan akan membuat folder baru jik
     print(f"Berhasil menyimpan data di folder {folder}!")
 
 
-def data_save(path : str, nama_file : str, data : Data) -> None:
-    file_path = path + "/" + nama_file + ".csv"
+def data_save(path : str, file_name : str, data : Data) -> None:
+    file_path = path + "/" + file_name + ".csv"
 """
 menyimpan data dari bentuk list of dictionaries menjadi csv di suatu folder
 """
     # tulis header
     with open(file_path, 'w') as file:
-        if nama_file == "item_inventory":
+        if file_name == "item_inventory":
             header = "user_id;type;quantity\n"
-        elif nama_file == "item_shop":
+        elif file_name == "item_shop":
             header = "type;stock;price\n"
-        elif nama_file == "monster":
+        elif file_name == "monster":
             header = "id;type;atk_power;def_power;hp\n"
-        elif nama_file == "monster_inventory":
+        elif file_name == "monster_inventory":
             header = "user_id;monster_id;level\n"
-        elif nama_file == "monster_shop":
+        elif file_name == "monster_shop":
             header = "monster_id;stock;price\n"
-        elif nama_file == "user":
+        elif file_name == "user":
             header = "id;username;password;role;oc\n"
         file.write(header)
         
         # Tulis data ke file
-        for baris in data:
+        for row in data:
             line = ""
-            for item in baris:
+            for row in baris:
                 line += str(item) + ";"
             file.write(line[:-1] + "\n")
 
