@@ -1,5 +1,5 @@
 
-def help_menu(username):
+def help_menu(username: str)->None:
     '''
     menampilkan menu help di game
     '''
@@ -22,7 +22,7 @@ def help_menu(username):
     print(pretext)   
     print(main_text)
     cmd = input('Tekan apapun untuk kembali: ')
-    return 
+    return None
 
 
     

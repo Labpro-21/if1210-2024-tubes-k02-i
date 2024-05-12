@@ -86,8 +86,37 @@ def menu_interface():
     [4] Laboratory
     [5] Back
     '''
+def admin_menu_interface():
+    admin_ai='''
+                                  _  _|_  _    \.    .  /    _  _|_  _
+                                 |;|_|;|_|;|    \:. ,  /    |;|_|;|_|;|
+                                 \..      /    ||;   . |    \.    .  /
+                                  \.  ,  /     ||:  .  |     \:  .  /
+                                   ||:   |_   _ ||_ . _ | _   _||:   |
+                                   ||:  .|||_|;|_|;|_|;|_|;|_|;||:.  |
+                                   ||:   ||.    .     .      . ||:  .|
+                                   ||: . || .  Hello, Admin  , ||:   |       \,/
+                                   ||:   ||:  ,  _______   .   ||: , |            /`
+                                   ||:   || .   /+++++++\    . ||:   |
+                                   ||:   ||.    |+++++++| .    ||: . |
+                                __ ||: . ||: ,  |+++++++|.  . _||_   |
+                       ____--`~    '--~~__|.    |+++++__|----~    ~`---,              ___
+                  -~--~                   ~---__|,--~'                  ~~----_____-~'   `~----~~
+                      [1] Monster Management
+                      [2] Shop Management
+                      [3] Back
+
+    '''
+        # Get the terminal width
+    terminal_width = shutil.get_terminal_size().columns
+
+    # Calculate the indentation needed for centering
+    indentation = (terminal_width - max(len(line) for line in admin_ai.split('\n'))) // 2
+
+    # Print the ASCII art with the calculated indentation
+    print('\n'.join(' ' * indentation + line for line in admin_ai.split('\n')))
 
 if __name__ =='__main__':
-    print_centered_menu(ascii_art())
+    admin_menu_interface()
     # print_centered(main_menu_interface())
     

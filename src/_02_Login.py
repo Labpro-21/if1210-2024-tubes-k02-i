@@ -1,56 +1,58 @@
 import CSVfunction as csv
-from GameState import game_state,username
+import os
+dirname = os.path.dirname(__file__)
+from GameState import game_state,username,is_admin
 
-user_data = csv.read_csv(r'if1210-2024-tubes-k02-i\data\user.csv')
-
-def check_input(username: str, password:str)->bool:
+def check_input(username: str, password:str,user_data:str)->bool:
     '''
     Mengecek input dari user
     '''
-    global game_state
+    is_admin = False
     for data in user_data:
         if username == data['username']:
             if password == data['password']:
                 print(f'Selamat datang, Agent {username}!\nMasukkan command "help" untuk daftar command yang dapat kamu panggil.')
                 game_state = 1
-                return  game_state
+                if 'admin' == data['role']:
+                    is_admin = True
+                    game_state = 0
+                return  game_state , is_admin , username
             else:
                 print('Password salah!')
-                return None
-            
-    print('Username tidak terdaftar!')
-    return None
-
+                return  game_state , is_admin , username
+    print('Username tidak terdaftar !')
+    game_state = 0
+    username = ''
+    return  game_state , is_admin , username
         
-def user_login():
+def user_login(data:str):
     '''
     Membuat fungsi login untuk menerima input dari user
     '''
-    global username
     username = str(input('Username: '))
     password = str(input('Password: '))
     
-    check_input(username,password)
-    return username
+    return check_input(username,password,data)
 
 
-def login_page(game_state):
+def login_page(game_state: int,username:str)->int:
     '''
     Membuat lama login untuk user
     '''
-    global user_data
-    user_data = csv.read_csv(r'if1210-2024-tubes-k02-i\data\user.csv')
+    user_data_path = os.path.join(dirname, '../data/user.csv')
+    user_data = csv.read_csv(user_data_path)
     if game_state == 0:
-        user_login()
-        return game_state
+        return user_login(user_data)
     else:
         print(f'Login gagal!\nAnda telah login dengan username {username}, silahkan lakukan "LOGOUT" sebelum melakukan login kembali!')
-    return None
-
+        return game_state , is_admin , username
+    
 if __name__ == '__main__' :
     # username , password = user_login()
     # print(username)
     # print(user_data)
+    print(is_admin)
     print(game_state)
-    login_page(game_state)
+    login_page(game_state,'bimo')
     print(game_state)
+    print(is_admin)

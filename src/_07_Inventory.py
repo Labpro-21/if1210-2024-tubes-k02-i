@@ -1,14 +1,19 @@
 import CSVfunction as csv
+import os
+dirname = os.path.dirname(__file__)
 
-def user_inventory(username):
+def user_inventory(username: str)->tuple[list[str], str]:
     '''
     Mencari inventory user berdasarkan idnya dan menampilkannya di layar
     '''
-    user_data = csv.read_csv(r'if1210-2024-tubes-k02-i\data\user.csv')
-    monster_data = csv.read_csv(r'if1210-2024-tubes-k02-i\data\monster.csv')
-    item_data = csv.read_csv(r'if1210-2024-tubes-k02-i\data\item_inventory.csv')
-    monster_inventory_data = csv.read_csv(r'if1210-2024-tubes-k02-i\data\monster_inventory.csv')
-    # print(user_data)
+    user_data_path =  os.path.join(dirname, '../data/user.csv')
+    monster_inventory_path =  os.path.join(dirname, '../data/monster_inventory.csv')
+    monster_user_data_path =  os.path.join(dirname, '../data/_05_Monster.csv')
+    item_data_path =  os.path.join(dirname, '../data/item_inventory.csv')
+    user_data = csv.read_csv(user_data_path)
+    monster_data = csv.read_csv(monster_user_data_path)
+    item_data = csv.read_csv(item_data_path)
+    monster_inventory_data = csv.read_csv(monster_inventory_path)
     ### mencari ID username dan coin
     for name in user_data:
         if username == name['username']:
@@ -38,7 +43,7 @@ def user_inventory(username):
     return display_inventory(player_inventory,coin)
 
 
-def print_monster(cnt,monster):
+def print_monster(cnt:int,monster:dict)->None:
     '''
     Mengeprint monster
     '''
@@ -48,7 +53,7 @@ def print_monster(cnt,monster):
     print(f"{cnt}.Monster       (Name: {name}, Lvl: {level}, HP: {hp})")
 
 
-def print_potion(cnt,potion):
+def print_potion(cnt:int,potion:dict)->None:
     '''
     Mengeprint potion
     '''
@@ -56,14 +61,14 @@ def print_potion(cnt,potion):
     quantity = potion['quantity']
     print(f"{cnt}.Potion        (Type: {potion_type}, Qty: {quantity})")
 
-def print_monster_ball(cnt,monster_ball):
+def print_monster_ball(cnt:int,monster_ball:dict)->None:
     '''
     Mengeprint monster ball
     '''
     quantity = monster_ball['quantity']
     print(f"{cnt}.Monster Ball  (Qty: {quantity})")
 
-def display_inventory(player_inventory,coin):
+def display_inventory(player_inventory:list[dict],coin:int)->list[dict]:
     '''
     Menampilkan inventory user di layar
     '''
@@ -81,7 +86,7 @@ def display_inventory(player_inventory,coin):
     return print_details_by_id(player_inventory)
                     
 
-def print_monster_details(monster):
+def print_monster_details(monster:dict)->None:
     '''
     Mengeprint detail monster
     '''
@@ -94,7 +99,7 @@ def print_monster_details(monster):
 
 
 # Function to print potion details
-def print_potion_details(potion):
+def print_potion_details(potion:dict)->None:
     '''
     Mengeprint detail potion atau monster ball
     '''
@@ -106,7 +111,7 @@ def print_potion_details(potion):
     print(f"Quantity  : {potion['quantity']}")
 
 
-def print_details_by_id(data):
+def print_details_by_id(data:dict)->None:
     '''
     Mengeprint detail item yang terdapat dalam inventory player
     '''
