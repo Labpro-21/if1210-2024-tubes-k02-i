@@ -43,7 +43,7 @@ def start_menu(game_state:int,is_admin:bool,username:str,):
     '''
     design.print_centered_start(design.start_menu_interface())
     command = input('Masukkan command (lowercase): ')
-    if command == 'login':
+    if command == 'login' and is_admin == False:
         game_state, is_admin, username = login.login_page(game_state,username)
 
         delay()
