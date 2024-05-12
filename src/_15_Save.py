@@ -1,10 +1,10 @@
-#F15-Save
-# Menyimpan data pada folder dengan parent folder "save"
+
 import os
-#Fungsi ()
-#Deskripsi
+
 def save(users : Data, item_inventories : Data, item_shop : Data, monster : Data, monster_shop : Data, monster_inventory : Data) -> None:
-# KAMUS LOKAL  
+"""
+memeriksa apakah folder yang dimaksud sudah ada dan akan membuat folder baru jika belum serta menyimpan file csv ke folder tersebut
+"""
     # Tentukan folder utama sebagai "save"
     parent_folder= "save"
     # Menerima data sebagai list atau dictionary
@@ -32,11 +32,12 @@ def save(users : Data, item_inventories : Data, item_shop : Data, monster : Data
 
     print(f"Berhasil menyimpan data di folder {folder}!")
 
-#Fungsi ()
-#Deskripsi
+
 def data_save(path : str, nama_file : str, data : Data) -> None:
-     file_path = path + "/" + nama_file + ".csv"
-#KAMUS LOKAL
+    file_path = path + "/" + nama_file + ".csv"
+"""
+menyimpan data dari bentuk list of dictionaries menjadi csv di suatu folder
+"""
     # tulis header
     with open(file_path, 'w') as file:
         if nama_file == "item_inventory":
