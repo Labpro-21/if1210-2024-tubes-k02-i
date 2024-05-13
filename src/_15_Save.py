@@ -54,12 +54,14 @@ def data_save(path : str, file_name : str, data ) -> None:
             header = "id;username;password;role;oc\n"
         file.write(header)
         
-        # Tulis data ke file
         for row in data:
             line = ""
-            for item in row:
-                line += str(item) + ";"
-            file.write(line[:-1] + "\n")
+            for i, item in enumerate(row):
+                line += str(item)
+                if i < len(row) - 1:
+                    line += ";"
+            line += "\n"
+            file.write(line)
 if __name__ == "__main__":
     save(users, item_inventories, item_shop, monster, monster_shop, monster_inventory)
 
