@@ -5,12 +5,12 @@ def save(user, item_inventories, item_shop, monster, monster_shop, monster_inven
     """
     memeriksa apakah folder yang dimaksud sudah ada dan akan membuat folder baru jika belum serta menyimpan file csv ke folder tersebut
     """
-    # Tentukan folder utama sebagai "save"
+    # Tentukan folder utama sebagai "data"
     parent_folder= "data"
     # Menerima data sebagai list atau dictionary
     folder = "data/" + input("Masukkan nama folder: ")
     print("Saving...")
-    # Periksa apakah folder /save sudah ada
+    # Periksa apakah folder /data sudah ada
     if not os.path.exists(parent_folder):
         print("Membuat folder data")
         # Buat parent folder jika belum ada
