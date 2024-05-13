@@ -1,27 +1,30 @@
-# KAMUS
-# seed : integer
-# ALGORITMA
-from time import time
-seed = int(time())
-# seed akan terus berubah
-# Mengembalikan angka random dengan algoritma Linear Congruential Generator (LCG) dengan angka rentang 0 - batas_atas.
-#seed: Nilai awal (biji) untuk memulai urutan.
-#a: Pengganda dalam rumus LCG.
-#c: Penambahan dalam rumus LCG.
-#m: Modulus dalam rumus LCG.
+import argparse
+import os
+import sys
 
-#rumus LCG= (a*seed + b) mod m
-#syarat : 0<m , 0<a<m , 0<=x<m, 0<seed<m
-def LCG(batas_atas : int) -> int:
-    # KAMUS LOKAL:
-        #const a : integer = 1664525
-        # constb c : integer = 1013904223
-        # const m : integer = 2^32
-    
-    # ALGORITMA
-    a = 1664525
-    c = 1013904223
-    m = 2**32
-    global seed
-    seed = (a*seed + c) % m
-    return seed % (batas_atas + 1)
+def main():
+     #argument parser dengan deskripsi program
+    parser = argparse.ArgumentParser(description="Menjalankan main.py dalam folder yang spesifik di dalam folder parent 'data'")
+     #argumen non-opsional
+    parser.add_argument("nama_folder", nargs='?', help="Nama folder di dalam parent 'data'")
+     #mengurai argumen
+    args = parser.parse_args()
+
+    if args.nama_folder is None:#tidak ada input
+        print("Tidak ada nama folder yang diberikan!\nUsage : python main.py <nama_folder>")
+        sys.exit()
+
+    folder_path = f"data/{args.nama_folder}"
+
+    #memeriksa apakah folder yang dimasukkan ada
+    if os.path.isdir(folder_path):
+        print("Loading...")
+        print("Selamat Datang di program OWCA!")
+        #mencari jalur (path) main.py di folder yang dituju
+        main_py_path = f"{folder_path}/main.py"
+        #eksekusi main.py
+        os.system(f"python {main_py_path}")
+    else:print(f"Folder '{args.nama_folder}' tidak ditemukan.")
+
+if __name__ == "__main__":
+    main()
