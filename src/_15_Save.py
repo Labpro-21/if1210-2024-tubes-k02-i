@@ -1,10 +1,10 @@
 
 import os
 
-def save(users : Data, item_inventories : Data, item_shop : Data, monster : Data, monster_shop : Data, monster_inventory : Data) -> None:
-"""
-memeriksa apakah folder yang dimaksud sudah ada dan akan membuat folder baru jika belum serta menyimpan file csv ke folder tersebut
-"""
+def save(user, item_inventories, item_shop, monster, monster_shop, monster_inventory) -> None:
+    """
+    memeriksa apakah folder yang dimaksud sudah ada dan akan membuat folder baru jika belum serta menyimpan file csv ke folder tersebut
+    """
     # Tentukan folder utama sebagai "save"
     parent_folder= "data"
     # Menerima data sebagai list atau dictionary
@@ -33,11 +33,11 @@ memeriksa apakah folder yang dimaksud sudah ada dan akan membuat folder baru jik
     print(f"Berhasil menyimpan data di folder {folder}!")
 
 
-def data_save(path : str, file_name : str, data : Data) -> None:
+def data_save(path : str, file_name : str, data ) -> None:
     file_path = path + "/" + file_name + ".csv"
-"""
-menyimpan data dari bentuk list of dictionaries menjadi csv di suatu folder
-"""
+    """
+    menyimpan data dari bentuk list of dictionaries menjadi csv di suatu folder
+    """
     # tulis header
     with open(file_path, 'w') as file:
         if file_name == "item_inventory":
@@ -57,8 +57,9 @@ menyimpan data dari bentuk list of dictionaries menjadi csv di suatu folder
         # Tulis data ke file
         for row in data:
             line = ""
-            for row in baris:
+            for item in row:
                 line += str(item) + ";"
             file.write(line[:-1] + "\n")
-
+if __name__ == "__main__":
+    save(users, item_inventories, item_shop, monster, monster_shop, monster_inventory)
 
