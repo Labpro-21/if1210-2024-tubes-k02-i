@@ -3,13 +3,6 @@ import os
 dirname = os.path.dirname(__file__)
 from GameState import game_state
 
-
-user_data_path =  os.path.join(dirname, '../data/user.csv')
-monster_inventory_path =  os.path.join(dirname, '../data/monster_inventory.csv')
-monster_user_data_path =  os.path.join(dirname, '../data/_05_Monster.csv')
-user_data = CSVfunction.read_csv(user_data_path)
-monster_data = CSVfunction.read_csv(monster_user_data_path)
-
 # KAMUS
 def validate_username(username: str)->bool:
     '''
@@ -25,8 +18,6 @@ def choose_monster(monster_data: list[str],username:str):
     '''
     Memilih monster
     '''
-    monster__user_data_path =  os.path.join(dirname, '../data/_05_Monster.csv')
-    monster_data = CSVfunction.read_csv(monster__user_data_path)
     print('Silahkan pilih salah satu monster sebagai monster awalmu.')
     for monster in monster_data:
         print(f"{monster['id']}. {monster['type']}")
@@ -45,49 +36,50 @@ def choose_monster(monster_data: list[str],username:str):
         return choose_monster(monster_data)
     
     
-def check_register(username: str)->bool:
+def check_register(username: str, password, user_data)->bool:
     '''
     Meregister username dan memvalidasinya
     '''
-    user_data_path =  os.path.join(dirname, '../data/user.csv')
-    user_data = CSVfunction.read_csv(user_data_path)
     if not validate_username(username):
         print('Username hanya boleh berisi alfabet, angka, underscore, dan strip!')
-        return False
+        username = False
+        password = False
+        return username , password
     for data in user_data:
         if username == data['username']:
             print(f'Username {username} sudah terpakai, silahkan gunakan username lain!')
-            return False
-    else: return True
+            username = False
+            password = False
+            return username , password
+    return username , password
 
-def user_input():
+def user_input(user_data):
     '''
     Input username dan password user
     '''
     username = input('Masukkan username: ')
     password = input('Masukkan password: ')
-    if not check_register(username):
-        return False
-    else : 
-        return username , password
+    return check_register(username,password,user_data)
     
-def register_page(game_state: int, username:str)->int:
+def register_page(game_state: int, username:str, monster_data, monster_inventory, user_data):
     '''
     Membuat laman register untuk user
     '''
-    monster_inventory_path =  os.path.join(dirname, '../data/monster_inventory.csv')
-    user_data_path =  os.path.join(dirname, '../data/user.csv')
-    user_data = CSVfunction.read_csv(user_data_path)
     if game_state == 0:
-        username,password = user_input()
+        username, password = user_input(user_data)
         if username:
             monster_id = choose_monster(monster_data,username)
-            CSVfunction.write_csv(user_data_path, f'{len(user_data)+1};{username};{password};agent;{0}\n')
-            CSVfunction.write_csv(monster_inventory_path,f'{len(user_data)+1};{monster_id};{1}\n')
+            user_data.append({'id': f'{len(user_data)+1}','username':username,'password':password,'role':'agent','oc':f'{0}'})
+            monster_inventory.append({'user_id': f'{len(user_data)}','monster_id':f'{monster_id}','level':f'{1}'})
+            # CSVfunction.write_csv(user_data_path, f'{len(user_data)+1};{username};{password};agent;{0}\n')
+            # CSVfunction.write_csv(monster_inventory_path,f'{len(user_data)+1};{monster_id};{1}\n')
             game_state = 1
-            return game_state
+            return username , game_state , user_data , monster_inventory
+        else:
+            return username , game_state , user_data , monster_inventory
     else:
         print(f'Register gagal!\nAnda telah login dengan username {username}, silahkan lakukan "LOGOUT" sebelum melakukan register!')
+        return username , game_state , user_data , monster_inventory
 
 
 if __name__ == '__main__':

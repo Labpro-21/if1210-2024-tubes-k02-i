@@ -12,6 +12,9 @@ def delay():
     
     
 def tampilan_awal():
+    '''
+    Membuat tampilan awal
+    '''
     monster_data_path = os.path.join(dirname, '../data/monster.csv')
     monster_data = csv.read_csv(monster_data_path)
     print("Selamat Datang Para Agen")
@@ -19,6 +22,9 @@ def tampilan_awal():
     return pilihan_monster_management(monster_data)
 
 def pilihan_monster_management(monster_list):
+    '''
+    Membuat fungsi untuk memilih dalam monster management
+    '''
     print("-"*50)
     print("[1] Tampilkan semua monster yang ada")
     print("[2] Tambahkan monster baru")
@@ -37,6 +43,9 @@ def pilihan_monster_management(monster_list):
         return None
         
 def cek_kesamaan_nama(monster_list, nama):
+    '''
+    Mengecek nama yang sama dalam data
+    '''
     for data in monster_list:
         if data['type']== nama:
             return True
@@ -44,6 +53,9 @@ def cek_kesamaan_nama(monster_list, nama):
             return False
 
 def tambah_monster_baru(monster_list):
+    '''
+    Fungsi untuk menambah atribut monster baru
+    '''
     print("... Proses pembuatan monster baru dimulai ...")    
     print()
     nama = input("Nama/Type Monster Baru : ")
@@ -75,6 +87,9 @@ def tambah_monster_baru(monster_list):
     return tambah_monster_ke_database(monster_list,monster_baru)
     
 def tambah_monster_ke_database(monster_list,monster_baru):
+    '''
+    Fungsi untuk menambah monster baru ke dalam data base
+    '''
     monster_data_path = os.path.join(dirname, '../data/monster.csv')
     pilihan = input("Ingin menambahkan Monster baru ke database? (Y/N) : ")
     if pilihan.lower() == "y" :

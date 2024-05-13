@@ -23,7 +23,7 @@ def save(user, item_inventories, item_shop, monster, monster_shop, monster_inven
         os.makedirs(folder)
 
     # Simpan data
-    data_save(folder, "user", users)
+    data_save(folder, "user", user)
     data_save(folder, "item_inventory", item_inventories)
     data_save(folder, "item_shop", item_shop)
     data_save(folder, "monster", monster)

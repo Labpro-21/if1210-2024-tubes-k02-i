@@ -19,6 +19,8 @@ def check_input(username: str, password:str,user_data:str)->bool:
                 return  game_state , is_admin , username
             else:
                 print('Password salah!')
+                game_state = 0
+                username = ''
                 return  game_state , is_admin , username
     print('Username tidak terdaftar !')
     game_state = 0
@@ -35,12 +37,10 @@ def user_login(data:str):
     return check_input(username,password,data)
 
 
-def login_page(game_state: int,username:str)->int:
+def login_page(game_state: int,username:str,user_data:list[dict])->int:
     '''
     Membuat lama login untuk user
     '''
-    user_data_path = os.path.join(dirname, '../data/user.csv')
-    user_data = csv.read_csv(user_data_path)
     if game_state == 0:
         return user_login(user_data)
     else:

@@ -2,47 +2,6 @@ import CSVfunction as csv
 import os
 dirname = os.path.dirname(__file__)
 
-def user_inventory(username: str)->tuple[list[str], str]:
-    '''
-    Mencari inventory user berdasarkan idnya dan menampilkannya di layar
-    '''
-    user_data_path =  os.path.join(dirname, '../data/user.csv')
-    monster_inventory_path =  os.path.join(dirname, '../data/monster_inventory.csv')
-    monster_user_data_path =  os.path.join(dirname, '../data/_05_Monster.csv')
-    item_data_path =  os.path.join(dirname, '../data/item_inventory.csv')
-    user_data = csv.read_csv(user_data_path)
-    monster_data = csv.read_csv(monster_user_data_path)
-    item_data = csv.read_csv(item_data_path)
-    monster_inventory_data = csv.read_csv(monster_inventory_path)
-    ### mencari ID username dan coin
-    for name in user_data:
-        if username == name['username']:
-            # print(name)
-            user_id = name['id']
-            coin = name['oc']
-        
-    ### mencari monster, potion, item, dan owc yang dimiliki berdasarkan ID
-    
-    ### monster yang dimiliki user
-    player_inventory=[]
-    for monster in monster_inventory_data:
-        if user_id == monster['user_id']:
-            level = monster['level']
-            monster_id = monster['monster_id']
-            for data in monster_data:
-                if monster_id == data['id']:
-                    data['level'] = level
-                    player_inventory.append(data)
-    
-    ### item / potion yang dimiliki user
-    for potion in item_data:
-        if user_id == potion['user_id']:
-            player_inventory.append(potion)
-            
-    ### print(player_inventory)
-    return display_inventory(player_inventory,coin)
-
-
 def print_monster(cnt:int,monster:dict)->None:
     '''
     Mengeprint monster
@@ -134,6 +93,7 @@ def print_details_by_id(data:dict)->None:
             print('Id item tidak ada di inventory, gunakan Id lain.')
     
 if __name__ == '__main__' :
-    user_inventory('Asep_Spakbor')
+    pass
+    # user_inventory('Asep_Spakbor')
     
     
