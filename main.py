@@ -5,6 +5,7 @@ import os
 dirname = os.path.dirname(__file__)
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 import time
+import argparse
 
 from src import (
     _00_LCG as lcg,
@@ -93,8 +94,6 @@ def start_menu(game_state:int,is_admin:bool,username:str, monster_shop_data , it
 
 
 
-
-
 ################################ MAIN MENU ######################################## 
 def main_menu(game_state, is_admin, username, monster_shop_data , item_shop_data , potion_data,  monster_inventory_data , item_inventory , monster_data , user_data):
     '''
@@ -154,7 +153,26 @@ def admin_menu(game_state, is_admin, username, monster_shop_data , item_shop_dat
 
 
 
+################################ F14 Load ######################################## 
 
+# Inisialisasi Argument Parser
+parser = argparse.ArgumentParser(description='Buka folder.')
+# Menambahkan argumen posisional
+parser.add_argument('folder', nargs='?', default=None, help='mengakses folder csv ')
+# Penguraian Argumen
+args = parser.parse_args()
+
+# jika input tidak ada
+if args.folder is None:
+    print("Tidak ada nama folder yang diberikan!\nUsage : python main.py <nama_folder>")
+    sys.exit()
+
+# memeriksa keberadaan folder
+if not os.path.exists(args.folder):
+    print(f"Folder \"{args.folder}\" tidak ditemukan!")
+    sys.exit()
+print("Loading...")
+print("Selamat Datang di program OWCA!")
 ################################ GAME START ########################################
 monster_shop_data , item_shop_data, potion_data, monster_inventory_data, item_inventory, monster_data, user_data = dp.data_path()
 start_menu(game_state, is_admin, username, monster_shop_data, item_shop_data, potion_data,  monster_inventory_data, item_inventory, monster_data, user_data)
