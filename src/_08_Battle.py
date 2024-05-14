@@ -1,137 +1,22 @@
 import CSVfunction as csv
 import _00_LCG as lcg
 import os
+import math
 dirname = os.path.dirname(__file__)
-# # KAMUS
-# # seed : integer
-# # ALGORITMA
-# from time import time
-# seed = int(time())
-# # seed akan terus berubah
-# # Mengembalikan angka random dengan algoritma Linear Congruential Generator (LCG) dengan angka rentang 0 - batas_atas.
-# #seed: Nilai awal (biji) untuk memulai urutan.
-# #a: Pengganda dalam rumus LCG.
-# #c: Penambahan dalam rumus LCG.
-# #m: Modulus dalam rumus LCG.
-
-# #rumus LCG= (a * seed + b) mod m
-# #syarat : 0<m , 0 < a < m , 0 <= x < m, 0<seed<m
-# def LCG(batas_atas : int) -> int:
-#     # KAMUS LOKAL:
-#         # const a : integer = 1664525
-#         # constb c : integer = 1013904223
-#         # const m : integer = 2^32
-    
-#     # ALGORITMA
-#     a = 1664525
-#     c = 1013904223
-#     m = 2**32
-#     global seed
-#     seed = (a*seed + c) % m
-#     return seed % (batas_atas + 1)
-
-# def head_csv(data: list[str])->list[str]:
-#     """
-#     Mengambil head dari list of list dalam csv
-#     """
-#     header = []
-#     for i in range(len(data[0])):
-#         header.append(data[0][i])
-#     return header
-
-# def list_of_dicts(head: list[str],data: list[str])->list[dict[str]]:
-#     """
-#     Membuat list of dictionary
-#     """
-#     list_of_dicts = []
-#     for inner_list in data:
-#         row_dict = {}
-#         for i, value in enumerate(inner_list):
-#             row_dict[head[i]] = value
-#         list_of_dicts.append(row_dict)
-#     return list_of_dicts
-
-# def data_csv(data: list[str])->list[str]:
-#     """
-#     Membuat data tanpa head
-#     """  
-#     datas = []
-#     for i in range(1,len(data)):
-#         datas.append(data[i])
-#     return datas
-
-# def read_csv(file_path: str)->list[dict[str]]:
-#     """
-#     Membaca file csv menjadi list of dictionarry
-#     """
-#     array = []
-#     temp = ''
-#     data_temp = []
-#     with open(file_path, 'r') as file:
-#         for line in file:
-#             for char in line:
-#                 if char != ';' and char != '\n':
-#                     temp += char
-#                 else:
-#                     data_temp.append(temp)
-#                     temp = ''
-#             array.append(data_temp)
-#             data_temp = []
-            
-#     head = head_csv(array)
-#     # print(head)
-#     array_data = data_csv(array)
-#     # print(array_data)
-#     data = list_of_dicts(head, array_data)
-#     return data
- 
-
-# def write_csv(file_path: str,data: str)->str:
-#     """ 
-#     Menuliskan data ke file csv
-#     """
-#     with open(file_path, 'a') as csvfile:
-#         if csvfile.tell() != 0:
-#             csvfile.write('\n')
-#         csvfile.write(data)
-        
-# def join_array(data:list[str])->str:
-#     """ 
-#     Menggabungkan kembali list of dictionarry menjadi format csv
-#     """
-#     csv = ''
-#     keys = list(data[0].keys())
-#     for i in range(len(keys)):
-#         if i == len(keys)-1:
-#             csv+=keys[i]
-#             csv+='\n'
-#         else:
-#             csv+=keys[i]
-#             csv+=';'
-
-#     for i in range(len(data)):
-#         values = list(data[i].values())
-#         for j in range(len(keys)):
-#             if j == (len(keys)-1):
-#                 csv+=values[j]
-#                 csv += '\n'
-#             else:
-#                 csv+=values[j]
-#                 csv+=';'
-#     return csv
-
-# def generate_id(data:list[str])->int:
-#     num_id = len(data)
-#     # for i in range(len(data)):
-#     #     if num_id == data[i][0]:
-#     #         return generate_id(data)
-#     return num_id
     
 monster_path = os.path.join(dirname, '../data/monster.csv')
+monster_inventory_path = os.path.join(dirname, '../data/monster_inventory.csv')
+potion_path = os.path.join(dirname, '../data/_06_potion.csv')
+item_inventory_path = os.path.join(dirname, '../data/item_inventory.csv')
+user_inventory_path = os.path.join(dirname, '../data/user.csv')
 data = csv.read_csv(monster_path)
+data_2 = csv.read_csv(monster_inventory_path)
+data_3 = csv.read_csv(potion_path)
+data_4 = csv.read_csv(item_inventory_path)
+data_5 = csv.read_csv(user_inventory_path)
     
 new_list = []
-
+# Mengubah data menjadi list
 # Append header row
 header_row = list(data[0].keys())
 new_list.append(header_row)
@@ -144,30 +29,60 @@ for entry in data:
 # Hapus baris pertama di list (baris yang berisi keterangan data)
 new_list = new_list[1:]
 
+new_list_2 = []
+# Mengubah data_2 menjadi list
+# Append header row
+header_row = list(data_2[0].keys())
+new_list_2.append(header_row)
 
-x=lcg.LCG(len(new_list)) 
+# Append data rows
+for entry in data_2:
+    values = list(entry.values())
+    new_list_2.append(values)
+    
+# Hapus baris pertama di list (baris yang berisi keterangan data)
+new_list_2 = new_list_2[1:]
 
-'''
-len(new_list) mengasumsikan bahwa batas LGC sebanyak baris dari new_list
-'''
-desired_monster_enemy = new_list[x-1] #new_list[x-1] karena panjang list dihitung dari 0
+      
+x=lcg.LCG(0, len(new_list)) # RNG mengasumsikan bahwa batas sebanyak baris dari list monster database
+
+monster_enemy = [['1', 'Pikachow', '125', '10', '600'], ['2', 'Bulbu', '50', '50', '1200'], ['3', 'Zeze', '300', '10', '100'], ['4', 'Zuko', '100', '25', '800'], ['5', 'Chacha', '80', '30', '700'], ['6', 'Bimosaurus', '175', '30', '600'], ['7', 'Arceus', '100', '10', '1000'], ['8', 'Squirex', '250', '20', '500'], ['9', 'Mewthree', '100', '50', '200'], ['10', 'Luigi', '150', '30', '700']]
+desired_monster_enemy = monster_enemy[x-1] # Mengambil monster musuh dengan fungsi RNG
+
+# Memilah nama, atk, def, dan health power monster musuh
 monster_enemy_name = desired_monster_enemy[1]
 attack_power_monster_enemy = int(desired_monster_enemy[2])
 defense_power_monster_enemy = int(desired_monster_enemy[3])
 health_monster_enemy = int(desired_monster_enemy[4])
+ 
+# Mencari level monster musuh dari database inventory
+monster_enemy_id_inventory = new_list_2[x-1]
+level_monster_enemy = int(monster_enemy_id_inventory[2])
 
-# Output
-print(f'''RAWRRR, Monster {monster_enemy_name} telah muncul !!!
+print(f'''RAWRRR, Monster {monster_enemy_name} telah muncul !!!''')
+
+# Mengeluarkan ASCII art monster musuh
+print('''
+          /\----/\_   
+         /         \   /|
+        |  | O    O | / |
+        |  | .vvvvv.|/  /
+       /   | |     |   /
+      /    | `^^^^^   /
+     | /|  |         /
+      / |    ___    |
+         \  |   |   |
+         |  |   |   |
+          \._\   \._\ 
+
       ''')
 
-print(f'''Name : {monster_enemy_name}
-ATK Power : {attack_power_monster_enemy}
-DEF Power : {defense_power_monster_enemy}
-HP : {health_monster_enemy}
-Level : dari inventory
-      ''')
+# Mengeluarkan deskripsi monster musuh
+print(f'Name : {monster_enemy_name}\nATK Power : {attack_power_monster_enemy}\nDEF Power : {defense_power_monster_enemy}\nHP : {health_monster_enemy}\nLevel : {level_monster_enemy}\n')
+
 print('============ MONSTER LIST ============')
-# Memodifikasi list sebelumnya (new_list) dengan menghilangkan desired_monster_list dari new_list
+# Memodifikasi list sebelumnya (monster_enemy) dengan menghilangkan desired_monster_enemy dari monster_enemy
+# Tujuan untuk monster musuh tidak sama dengan pilihan monster user
 index_to_remove = None
 for idx in range(len(new_list)):
     if new_list[idx] == desired_monster_enemy:
@@ -180,112 +95,201 @@ if index_to_remove is not None:
     # Panjang sisa dari list yang sudah termodifikasi 
     monster_list_row = len(new_list)
     
-    # Output print nama tiap monster yang belum terpakai dari new_list (monster_list_name)
+    # Output print nama tiap monster yang belum terpakai
     for idx in range(1, len(new_list) + 1):
-        monster_list_name = new_list[idx - 1]  # Adjust index to start from 0
+        monster_list_name = new_list[idx - 1] 
         print(f'{idx}. {monster_list_name[1]}')
 
+monster_list_name = monster_list[1] # Mengambil nama monster yang tersisa
 
-monster_list_name = monster_list[1] # Mengindikasikan sebuah variabel nama monster dari monster_list
-
-# Fungsi untuk memeriksa apakah input user_monster_choice sudah sesuai dalam range
-def is_include(user_monster_choice, idx):
+def is_include(user_monster_choice: int, idx: int) -> int :
+    '''
+    Fungsi untuk mengembalikan pilihan monster di range yang tersedia
+    '''
     return 0 < user_monster_choice <= idx
 
-# Input dan memanggil fungsi is_include
+# User memanggil monster yang tersedia dan memanggil fungsi is_include
 user_monster_choice = int(input('Pilih monster untuk bertarung: '))
 is_include(user_monster_choice, idx)
 
 # Looping terjadi apabila inputan user_monster_choice tidak sesuai dalam range
-# Looping menghasilkan input baru untuk diperiksa dalam fungsi hingga berhasil
 while not is_include(user_monster_choice, idx):
-    print('''Pilihan monster tidak tersedia!
-Coba lagi!''')
-    user_monster_choice = int(input('Pilih monster untuk bertarung: '))
+    print('''Pilihan monster tidak tersedia! Coba lagi!\n''')
+    user_monster_choice = int(input('Pilih monster untuk bertarung: ')) # Looping menghasilkan input baru untuk diperiksa dalam fungsi is_include hingga berhasil
 
-# Apabila input berhasil
-user_monster_choice_list = new_list[user_monster_choice - 1]
+
+user_monster_choice_list = new_list[user_monster_choice - 1] # Mengambil monster pilihan user
+
+# Memilah nama, atk, defense, dan health power monster user
 user_monster_choice_name = user_monster_choice_list[1]
 user_monster_choice_attack_power = int(user_monster_choice_list[2])
 user_monster_choice_defense_power = int(user_monster_choice_list[3])
 user_monster_choice_health_power = int(user_monster_choice_list[4])
+user_monster_choice_health_power_max = int(user_monster_choice_list[4]) # Inisialisasi besar maksimal HP monster user
 
+# Mencari level monster user dari database inventory
+user_monster_id_inventory = new_list_2[user_monster_choice - 1]
+user_monster_level = int(user_monster_id_inventory[2])
 
-print(f'''RAWRRR, Agent X mengeluarkan monster {user_monster_choice_name} !!!
+print(f'''RAWRRR, Agent X mengeluarkan monster {user_monster_choice_name} !!!\n''')
+
+# Mengeluarkan ASCII art monster user
+print('''
+           _/\----/\\   
+          /         \\     /\\
+         |  O    O   |   |  |
+         |  .vvvvv.  |   |  |
+         /  |     |   \\  |  |
+        /   `^^^^^'    \\ |  |
+      ./  /|            \\|  |_
+     /   / |         |\\__     /
+     \\  /  |         |   |__|
+      `'   |  _      |
+        _.-'-' `-'-'.'_
+   __.-'               '-.__
+
       ''')
 
-print(f'''Name : {user_monster_choice_name}
-ATK Power : {user_monster_choice_attack_power}
-DEF Power : {user_monster_choice_defense_power}
-HP : {user_monster_choice_health_power}
-Level : dari inventory
-      ''')
+# Mengeluarkan deskripsi monster user
+print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
 
+# RNG user
+attack_user_rng = lcg.LCG(30 * user_monster_choice_attack_power/100, 70 * user_monster_choice_attack_power/100)
+defense_user_rng = lcg.LCG(0, defense_power_monster_enemy)
+reduced_attack_user = ((100 - defense_user_rng) * attack_user_rng/100)
+
+# RNG musuh
+attack_enemy_rng = lcg.LCG(30 * attack_power_monster_enemy/100, 70 * attack_power_monster_enemy/100)
+defense_enemy_rng = lcg.LCG(0, user_monster_choice_defense_power)
+reduced_attack_enemy = ((100 - defense_enemy_rng) * attack_enemy_rng/100)
+
+# RNG coin
+oc_generator = lcg.LCG(5, 30)
+# Mencari data coin dari database user
+for name in data_5:
+    if data_5 == name['username']:
+        user_coin = name['oc']
+
+# Mencari data pada database potion
+strength_qty = 0
+resilience_qty = 0
+healing_qty = 0
+
+for strength in data_4:
+    if strength['type'] == 'strength':
+        strength_qty += int(strength['quantity'])
+for resilience in data_4:
+    if resilience['type'] == 'resilience':
+        resilience_qty += int(resilience['quantity'])      
+for healing in data_4:
+    if healing['type'] == 'healing':
+        healing_qty += int(healing['quantity'])
+
+for strength_ in data_3:
+    if strength_['potion_name'] == 'strength':
+        strength_percentage = int(strength_['percentage'])
+for resilience_ in data_3:
+    if resilience_['potion_name'] == 'resilience':
+        resilience_percentage = int(resilience_['percentage'])
+for healing_ in data_3:
+    if healing_['potion_name'] == 'resilience':
+        healing_percentage = int(healing_['percentage'])
+
+# Insialisasi variabel untuk digunakan dalam loop
 over = False
 lose = False
 win = False
 turn_round = 1
-while not over:
-    print(f'============ TURN {turn_round} ({user_monster_choice_name}) ============')
-    print('''1. Attack
-2. Use Potion
-3. Quit''')
-    user_choice = int(input('Pilih perintah: '))
-    
-    if user_choice == 1:
-        health_monster_enemy = health_monster_enemy - user_monster_choice_attack_power
-        
-        if health_monster_enemy <= 0:
-            health_monster_enemy = 0
-            win = True
 
-        print(f'''SKADIDODOO, {user_monster_choice_name} menyerang {monster_enemy_name} !!!
-              ''')
-        print(f'''Name : {monster_enemy_name}
-ATK Power : {attack_power_monster_enemy}
-DEF Power : {defense_power_monster_enemy}
-HP : {health_monster_enemy}
-Level : dari inventory
-      ''')
+while not over: # Ketika pertarungan belum usai
+    print(f'============ TURN {turn_round} ({user_monster_choice_name}) ============')
+    print('''1. Attack\n2. Use Potion\n3. Quit''')
+
+    user_choice = int(input('Pilih perintah: ')) # User memilih perintah
+    
+    if user_choice == 1: # Ketika user memilih untuk Attack
+        health_monster_enemy = math.floor(health_monster_enemy - reduced_attack_user) # HP monster musuh berkurang oleh ATK monster user yg sudah ter-RNG
+        if health_monster_enemy <= 0: 
+            health_monster_enemy = 0 # Mengembalikan HP monster musuh yang tidak boleh kurang dari 0
+            win = True # Jika HP monster musuh sudah 0
+            
+        # Deskripsi penyerangan dan dampak pada monster musuh
+        print(f'SKADIDODOO, {user_monster_choice_name} menyerang {monster_enemy_name} !!!\n')
+        print(f'Name : {monster_enemy_name}\nATK Power : {attack_power_monster_enemy}\nDEF Power : {defense_power_monster_enemy}\nHP : {health_monster_enemy}\nLevel : {level_monster_enemy}\n')
+        print(f'# Penjelasan: ATT: {attack_user_rng}, Reduced by: {defense_user_rng}, ATT Results: {reduced_attack_user}')
         
+        # Jika menang
         if win:
             print(f'Selamat anda mengalahkan monster {monster_enemy_name} !!!')
-            over = True
+            print(f'Total OC yang diperoleh: {user_coin + oc_generator}') # User mendapatkan OC coin dari hasil RNG dan menambahkannya pada database user
+            over = True # Permainan selesai
             break
         
+        # Monster musuh gantian menyerang
         print(f'============ TURN {turn_round} ({monster_enemy_name}) ============')
-        user_monster_choice_health_power = user_monster_choice_health_power - attack_power_monster_enemy
+        user_monster_choice_health_power = math.floor(user_monster_choice_health_power - reduced_attack_enemy) # HP monster user berkurang oleh ATK monster user yg sudah ter-RNG
         
         if user_monster_choice_health_power <= 0:
-            user_monster_choice_health_power = 0
-            lose = True
+            user_monster_choice_health_power = 0 # Mengembalikan HP monster user yang tidak boleh kurang dari 0
+            lose = True # Jika HP monster user sudah 0
             
-        print(f'''SKADLIDODOR, {monster_enemy_name} menyerang {user_monster_choice_name} !!!
-              ''')
-        print(f'''Name : {user_monster_choice_name}
-ATK Power : {user_monster_choice_attack_power}
-DEF Power : {user_monster_choice_defense_power}
-HP : {user_monster_choice_health_power}
-Level : dari inventory''')
+        # Deskripsi penyerangan dan dampak pada monster user    
+        print(f'SKADLIDODOR, {monster_enemy_name} menyerang {user_monster_choice_name} !!!\n')
+        print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
+        print(f'# Penjelasan: ATT: {attack_enemy_rng}, Reduced by: {defense_enemy_rng}, ATT Results: {reduced_attack_enemy}')
         
+        # Jika kalah
         if lose:
             print(f'Tidakkk, kamu telah dikalahkan oleh {monster_enemy_name} !!!')
-            over = True
+            over = True # Permainan selesai
             break
-    
-    #elif user_choice == 2:
-        #print('============ POTION LIST ============')
-        #print(f'''1. Strength Potion (Qty: {}) - Increases ATK Power
-#2. Resilience Potion (Qty: {}) - Increases DEF Power
-#3. Healing Potion (Qty: {}) - Restores Health
-#4. Cancel''')
-       #user_potion_choice = int(input('Pilih perintah: '))
-        
-        #if user_potion_choice == 1:
-            
-    turn_round += 1
-    
-'''
-ongoing
+        turn_round += 1 # Round battle bertambah apabila kedua pihak monster selesai menyerang
 
-'''
+    elif user_choice == 2: # Ketika user memilih potion
+        print('============ POTION LIST ============')
+        # Deskripsi potion yang tersedia
+        print(f'''1. Strength Potion (Qty: {strength_qty}) - Increases ATK Power\n2. Resilience Potion (Qty: {resilience_qty}) - Increases DEF Power\n3. Healing Potion (Qty: {healing_qty}) - Restores Health\n4. Cancel''')
+        
+        user_potion_choice = int(input('Pilih perintah: \n')) # User memilih potion atau cancel
+
+        
+        if user_potion_choice == 1: # Jika user memilih potion strength
+            if strength_qty == 0: # Jika potion strength tidak tersedia
+                print('Wah, kamu sedang tidak memiliki ramuan ini, silahkan pilih ramuan lain!')
+            else: # Jika potion strength tersedia
+                user_monster_choice_attack_power *= (strength_percentage + 100) / 100 # Attack power bertambah
+                strength_qty -= 1 # Ketersediaan potion berkurang 1
+                
+                # Deskripsi perubahan pada monster user
+                print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
+                print(f'# Penjelasan: Attack power monster bertambah sebesar {strength_percentage}% menjadi: {user_monster_choice_attack_power}')
+                          
+        elif user_potion_choice == 2: # Jika user memilih potion resilience
+            if resilience_qty == 0: # Jika poton resilience tidak tersedia
+                print('Wah, kamu sedang tidak memiliki ramuan ini, silahkan pilih ramuan lain!')
+            else: # Jika potion resilience tersedia
+                user_monster_choice_defense_power *= (resilience_percentage + 100) / 100
+                resilience_qty -= 1 # Ketersediaan potion berkurang 1
+                
+                # Deskripsi perubahan pada monster user
+                print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
+                print(f'# Penjelasan: Defense power monster bertambah sebesar {resilience_percentage}% menjadi: {user_monster_choice_defense_power}')
+                
+        elif user_potion_choice == 3: # Jika user memilih potion healing
+            if healing_qty == 0: # Jika potion healing tidak tersedia
+                print('Wah, kamu sedang tidak memiliki ramuan ini, silahkan pilih ramuan lain!')
+            else: # Jika potion healing tersedia
+                user_monster_choice_health_power *= (healing_percentage + 100) / 100
+                healing_qty -= 1           
+            if user_monster_choice_health_power > user_monster_choice_health_power_max: # Jika HP monster user bertambah lebih dari maksimum HP-nya
+                user_monster_choice_health_power = user_monster_choice_health_power_max # HP monster user akan sama dengan HP monster maksimumnya
+                
+        elif user_potion_choice == 4: # Jika user memilih cancel
+            over = False # Kembali looping 
+        
+        else: # Jika pilihan user tidak tersedia
+            print('Perintah yang diberikan tidak tersedia, coba ulangi!')
+
+    elif user_choice == 3: # Jika user memilih Quit
+        print('Anda berhasil kabur dari BATTLE !')
+        break 
