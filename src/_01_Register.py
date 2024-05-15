@@ -69,17 +69,17 @@ def register_page(game_state: int, username:str, monster_data, monster_inventory
         username, password = user_input(user_data)
         if username:
             monster_id = choose_monster(monster_data,username)
-            user_data.append({'id': f'{len(user_data)+1}','username':username,'password':password,'role':'agent','oc':f'{0}'})
-            monster_inventory.append({'user_id': f'{len(user_data)}','monster_id':f'{monster_id}','level':f'{1}'})
+            user_data.append({'id': str(len(user_data)+1),'username':username,'password':password,'role':'agent','oc':f'0'})
+            monster_inventory.append({'user_id': str(len(user_data)),'monster_id':f'{monster_id}','level':'1'})
             # CSVfunction.write_csv(user_data_path, f'{len(user_data)+1};{username};{password};agent;{0}\n')
             # CSVfunction.write_csv(monster_inventory_path,f'{len(user_data)+1};{monster_id};{1}\n')
             game_state = 1
-            return username , game_state , user_data , monster_inventory
+            return username , game_state
         else:
-            return username , game_state , user_data , monster_inventory
+            return username , game_state
     else:
         print(f'Register gagal!\nAnda telah login dengan username {username}, silahkan lakukan "LOGOUT" sebelum melakukan register!')
-        return username , game_state , user_data , monster_inventory
+        return username , game_state
 
 
 if __name__ == '__main__':

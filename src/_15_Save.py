@@ -1,4 +1,5 @@
-
+import CSVfunction as csv
+import DataPath as dp
 import os
 
 def save(user, item_inventories, item_shop, monster, monster_shop, monster_inventory) -> None:
@@ -38,30 +39,35 @@ def data_save(path : str, file_name : str, data ) -> None:
     """
     menyimpan data dari bentuk list of dictionaries menjadi csv di suatu folder
     """
-    # tulis header
-    with open(file_path, 'w') as file:
-        if file_name == "item_inventory":
-            header = "user_id;type;quantity\n"
-        elif file_name == "item_shop":
-            header = "type;stock;price\n"
-        elif file_name == "monster":
-            header = "id;type;atk_power;def_power;hp\n"
-        elif file_name == "monster_inventory":
-            header = "user_id;monster_id;level\n"
-        elif file_name == "monster_shop":
-            header = "monster_id;stock;price\n"
-        elif file_name == "user":
-            header = "id;username;password;role;oc\n"
-        file.write(header)
+    if file_name == "item_inventory":
+        sort_data(data,'user_id')
+    elif file_name == "monster":
+        sort_data(data,'id')
+    elif file_name == "monster_inventory":
+        sort_data(data, 'user_id')
+    elif file_name == "monster_shop":
+        sort_data(data, 'monster_id')
+    elif file_name == "user":
+        sort_data(data, 'id')
         
-        for row in data:
-            line = ""
-            for i, item in enumerate(row):
-                line += str(item)
-                if i < len(row) - 1:
-                    line += ";"
-            line += "\n"
-            file.write(line)
+    data = csv.join_array(data)
+    
+    with open(file_path, 'w') as csvfile:
+        csvfile.write(data)
+            
+def sort_data(data,sortby):
+    '''
+    Mengurutkan data sesuai urutannya
+    '''
+    n = len(data)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if int(data[j][sortby]) > int(data[j+1][sortby]):
+                data[j], data[j+1] = data[j+1], data[j]
+            
 if __name__ == "__main__":
-    save(users, item_inventories, item_shop, monster, monster_shop, monster_inventory)
+    monster_shop_data , item_shop_data, potion_data, monster_inventory_data, item_inventory, monster_data, user_data = dp.data_path('data')
+    save(user_data, item_inventory, item_shop_data, monster_data, monster_shop_data, monster_inventory_data)
+    pass
+    # save(users, item_inventories, item_shop, monster, monster_shop, monster_inventory)
 

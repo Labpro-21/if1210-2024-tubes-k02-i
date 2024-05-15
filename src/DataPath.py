@@ -4,18 +4,18 @@ import os
 dirname = os.path.dirname(__file__)
 
 
-def data_path():
+def data_path(dir:str):
     '''
     Membuat fungsi datapath untuk mempermudah mencari data
     '''
     # data path
-    user_data_path =  os.path.join(dirname, '../data/user.csv')
-    monster_data_path =  os.path.join(dirname, '../data/monster.csv')
-    monster_shop_path =  os.path.join(dirname, '../data/monster_shop.csv')
-    item_shop_path =  os.path.join(dirname, '../data/item_shop.csv')
-    monster_inventory_path =  os.path.join(dirname, '../data/monster_inventory.csv')
-    item_inventory_path =  os.path.join(dirname, '../data/item_inventory.csv')
-    potion_data_path = os.path.join(dirname, '../data/_06_Potion.csv')
+    user_data_path =  os.path.join(dirname, f'../{dir}/user.csv')
+    monster_data_path =  os.path.join(dirname, f'../{dir}/monster.csv')
+    monster_shop_path =  os.path.join(dirname, f'../{dir}/monster_shop.csv')
+    item_shop_path =  os.path.join(dirname, f'../{dir}/item_shop.csv')
+    monster_inventory_path =  os.path.join(dirname, f'../{dir}/monster_inventory.csv')
+    item_inventory_path =  os.path.join(dirname, f'../{dir}/item_inventory.csv')
+    potion_data_path = os.path.join(dirname, f'../data/_06_Potion.csv')
     
     # read data as list of dictionary
     monster_shop_data = csv.read_csv(monster_shop_path)

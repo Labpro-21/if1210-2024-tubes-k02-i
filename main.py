@@ -45,11 +45,10 @@ def delay():
     
     
 ################################ START MENU ####################################### 
-def start_menu(game_state:int,is_admin:bool,username:str, monster_shop_data , item_shop_data , potion_data,  monster_inventory_data , item_inventory , monster_data , user_data):
+def start_menu(game_state:int,is_admin:bool,username:str, monster_shop_data:list[dict] , item_shop_data:list[dict] , potion_data:list[dict],  monster_inventory_data:list[dict] , item_inventory:list[dict] , monster_data:list[dict] , user_data:list[dict]):
     '''
     Menu awal yang ditampilkan ketika memulai game
     '''
-    
     design.print_centered_start(design.start_menu_interface())
     command = input('Masukkan command (lowercase): ')
     if command == 'login': ### LOGIN ####
@@ -65,7 +64,7 @@ def start_menu(game_state:int,is_admin:bool,username:str, monster_shop_data , it
         if is_admin:
             print('Anda tidak bisa register sebagai admin!')
         else:
-            username , game_state , user_data , monster_inventory_data = register.register_page(game_state, username, monster_data, monster_inventory_data, user_data)
+            username , game_state = register.register_page(game_state, username, monster_data, monster_inventory_data, user_data)
     elif command == 'menu': ### MENU ####
         if game_state == 1:
             print('Anda akan masuk ke main menu! Selamat datang pejuang.')
@@ -77,7 +76,7 @@ def start_menu(game_state:int,is_admin:bool,username:str, monster_shop_data , it
         game_state,is_admin = logout.logout(game_state,is_admin)
         username = ''
     elif command == 'exit':
-        exit_module.game_exit(username)
+        exit_module.game_exit(username, user_data,item_inventory,item_shop_data,monster_data,monster_shop_data,monster_inventory_data)
     elif command == 'asepspakbortheboss': ### ADMIN ####
         if is_admin:
             print('Halo , admin! silahkan mengatur universe kami.')
@@ -95,13 +94,14 @@ def start_menu(game_state:int,is_admin:bool,username:str, monster_shop_data , it
 
 
 ################################ MAIN MENU ######################################## 
-def main_menu(game_state, is_admin, username, monster_shop_data , item_shop_data , potion_data,  monster_inventory_data , item_inventory , monster_data , user_data):
+def main_menu(game_state:int, is_admin:bool, username:str, monster_shop_data:list[dict] , item_shop_data:list[dict] , potion_data:list[dict],  monster_inventory_data:list[dict] , item_inventory:list[dict] , monster_data:list[dict] , user_data:list[dict]):
     '''
     Menu ketika menampilkan game
     '''
     design.print_centered_menu(design.ascii_art())
     command = input('Masukkan command (lowercase): ')
     if command == 'inventory': ### INVENTORY ####
+        delay()
         player_inventory , coin = PlayerInventory.player_inventory(username, user_data , monster_inventory_data , item_inventory , monster_data)
         inventory.display_inventory(player_inventory,coin)
     elif command == 'battle': ### BATTLE ####
@@ -111,6 +111,9 @@ def main_menu(game_state, is_admin, username, monster_shop_data , item_shop_data
         pass
     elif command == 'laboratory': ### LABORATORY ####
         pass
+    elif command == 'shop': ### SHOP ####
+        delay()
+        shop_and_currency.shop_currency_page(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)
     elif command == 'back': ### BACK TO START ####
         print('Akan kembali ke start menu.') 
         delay()
@@ -133,11 +136,12 @@ def main_menu(game_state, is_admin, username, monster_shop_data , item_shop_data
 
 
 ################################ ADMIN MENU ######################################## 
-def admin_menu(game_state, is_admin, username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data):
+def admin_menu(game_state, is_admin, username, monster_shop_data:list[dict] , item_shop_data:list[dict] , potion_data:list[dict], monster_inventory_data:list[dict] , item_inventory:list[dict] , monster_data:list[dict] , user_data:list[dict]):
     design.admin_menu_interface()
     command = input('Masukkan command (lowercase): ')
     if command == 'monster management' or command == '1': ### MONSTER MANAGEMENT ####
-        monster_management.tampilan_awal()
+        delay()
+        monster_management.pilihan_monster_management(monster_data)
     elif command == 'shop management' or command == '2': ### SHOP MANAGEMENT ####
         pass 
     elif command == 'back'or command == '3': ### BACK TO STAR ####
@@ -161,18 +165,18 @@ parser = argparse.ArgumentParser(description='Buka folder.')
 parser.add_argument('folder', nargs='?', default=None, help='mengakses folder csv ')
 # Penguraian Argumen
 args = parser.parse_args()
-
 # jika input tidak ada
 if args.folder is None:
     print("Tidak ada nama folder yang diberikan!\nUsage : python main.py <nama_folder>")
     sys.exit()
-
 # memeriksa keberadaan folder
 if not os.path.exists(args.folder):
     print(f"Folder \"{args.folder}\" tidak ditemukan!")
     sys.exit()
+
 print("Loading...")
+delay()
 print("Selamat Datang di program OWCA!")
 ################################ GAME START ########################################
-monster_shop_data , item_shop_data, potion_data, monster_inventory_data, item_inventory, monster_data, user_data = dp.data_path()
+monster_shop_data , item_shop_data, potion_data, monster_inventory_data, item_inventory, monster_data, user_data = dp.data_path(args.folder)
 start_menu(game_state, is_admin, username, monster_shop_data, item_shop_data, potion_data,  monster_inventory_data, item_inventory, monster_data, user_data)
