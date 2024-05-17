@@ -2,7 +2,7 @@ import CSVfunction as csv
 import DataPath as dp
 import os
 
-def save(user, item_inventories, item_shop, monster, monster_shop, monster_inventory) -> None:
+def save(user:list[dict], item_inventories:list[dict], item_shop:list[dict], monster, monster_shop:list[dict], monster_inventory:list[dict]) -> None:
     """
     memeriksa apakah folder yang dimaksud sudah ada dan akan membuat folder baru jika belum serta menyimpan file csv ke folder tersebut
     """
@@ -55,7 +55,7 @@ def data_save(path : str, file_name : str, data ) -> None:
     with open(file_path, 'w') as csvfile:
         csvfile.write(data)
             
-def sort_data(data,sortby):
+def sort_data(data:list[dict],sortby:str):
     '''
     Mengurutkan data sesuai urutannya
     '''

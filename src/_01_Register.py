@@ -36,7 +36,7 @@ def choose_monster(monster_data: list[str],username:str):
         return choose_monster(monster_data)
     
     
-def check_register(username: str, password, user_data)->bool:
+def check_register(username: str, password:str, user_data:list[dict])->bool:
     '''
     Meregister username dan memvalidasinya
     '''
@@ -53,7 +53,7 @@ def check_register(username: str, password, user_data)->bool:
             return username , password
     return username , password
 
-def user_input(user_data):
+def user_input(user_data:list[dict]):
     '''
     Input username dan password user
     '''
@@ -61,7 +61,7 @@ def user_input(user_data):
     password = input('Masukkan password: ')
     return check_register(username,password,user_data)
     
-def register_page(game_state: int, username:str, monster_data, monster_inventory, user_data):
+def register_page(game_state: int, username:str, monster_data:list[dict], monster_inventory:list[dict], user_data:list[dict]):
     '''
     Membuat laman register untuk user
     '''

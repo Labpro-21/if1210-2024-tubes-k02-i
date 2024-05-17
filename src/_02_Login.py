@@ -3,7 +3,7 @@ import os
 dirname = os.path.dirname(__file__)
 from GameState import game_state,username,is_admin
 
-def check_input(username: str, password:str,user_data:str)->bool:
+def check_input(username: str, password:str,user_data:list[dict])->bool:
     '''
     Mengecek input dari user
     '''
@@ -27,7 +27,7 @@ def check_input(username: str, password:str,user_data:str)->bool:
     username = ''
     return  game_state , is_admin , username
         
-def user_login(data:str):
+def user_login(data:list[dict]):
     '''
     Membuat fungsi login untuk menerima input dari user
     '''

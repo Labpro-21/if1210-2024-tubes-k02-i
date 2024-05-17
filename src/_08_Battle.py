@@ -44,7 +44,7 @@ for entry in data_2:
 # Hapus baris pertama di list (baris yang berisi keterangan data)
 new_list_2 = new_list_2[1:]
 
-      
+
 x=lcg.LCG(0, len(new_list)) # RNG mengasumsikan bahwa batas sebanyak baris dari list monster database
 
 monster_enemy = [['1', 'Pikachow', '125', '10', '600'], ['2', 'Bulbu', '50', '50', '1200'], ['3', 'Zeze', '300', '10', '100'], ['4', 'Zuko', '100', '25', '800'], ['5', 'Chacha', '80', '30', '700'], ['6', 'Bimosaurus', '175', '30', '600'], ['7', 'Arceus', '100', '10', '1000'], ['8', 'Squirex', '250', '20', '500'], ['9', 'Mewthree', '100', '50', '200'], ['10', 'Luigi', '150', '30', '700']]

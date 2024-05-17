@@ -11,7 +11,7 @@ def delay():
     time.sleep(0.5)
     os.system('cls')
 
-def pilihan_monster_management(monster_list):
+def pilihan_monster_management(monster_list:list[dict]):
     '''
     Membuat fungsi untuk memilih dalam monster management
     '''
@@ -37,7 +37,8 @@ def pilihan_monster_management(monster_list):
         print('Input anda salah, ulangi!')
         delay()
         return pilihan_monster_management(monster_list)
-def cek_kesamaan_nama(monster_list, nama):
+    
+def cek_kesamaan_nama(monster_list:list[dict], nama:str):
     '''
     Mengecek nama yang sama dalam data
     '''
@@ -47,7 +48,7 @@ def cek_kesamaan_nama(monster_list, nama):
         else: 
             return False
 
-def tambah_monster_baru(monster_list):
+def tambah_monster_baru(monster_list:list[dict]):
     '''
     Fungsi untuk menambah atribut monster baru
     '''
@@ -91,7 +92,7 @@ def tambah_monster_baru(monster_list):
     print()
     return tambah_monster_ke_database(monster_list,monster_baru)
     
-def tambah_monster_ke_database(monster_list,monster_baru):
+def tambah_monster_ke_database(monster_list:list[dict],monster_baru:dict):
     '''
     Fungsi untuk menambah monster baru ke dalam data base
     '''

@@ -8,11 +8,11 @@ def delay():
     '''
     Membuat delay pada screen dan clear screen di terminal
     '''
-    time.sleep(3)
+    time.sleep(1)
     os.system('cls')
     
 
-def shop_currency_page(username:str, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data ):
+def shop_currency_page(username:str, monster_shop_data:list[dict] , item_shop_data:list[dict] , potion_data:list[dict], monster_inventory_data :list[dict], item_inventory:list[dict] , monster_data:list[dict] , user_data:list[dict] ):
     '''
     Membuat fitur shop dalam game dengan fungsi ini sebagai page pertamanya
     
@@ -30,12 +30,13 @@ def shop_currency_page(username:str, monster_shop_data , item_shop_data , potion
     elif cmd == 'beli':
         return beli(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data , user_id)
     elif cmd == 'keluar':
-        pass
+        print(f'Selamat tinggal {username}! Sampai bertemu lagi.')
     else:
         print('Perintah anda salah! Ulangi perintah anda.')
         return shop_currency_page(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)
 
-def lihat(username:str, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data , ):
+####################################################### FUNGSI UNTUK MELIHAT DATA #######################################################
+def lihat(username:str, monster_shop_data:list[dict] , item_shop_data :list[dict], potion_data:list[dict], monster_inventory_data:list[dict] , item_inventory :list[dict], monster_data:list[dict] , user_data:list[dict]):
     '''
     Membuat fungsi untuk melihat item apa saja yang dijual
     '''
@@ -60,8 +61,11 @@ def lihat(username:str, monster_shop_data , item_shop_data , potion_data, monste
         print('Perintah anda salah! Ulangi perintah anda.')
         delay()
         return lihat(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data , )
-        
-def beli(username:str, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data , user_id):
+####################################################### FUNGSI UNTUK MELIHAT DATA #######################################################        
+
+
+####################################################### FUNGSI UNTUK MEMBELI #######################################################
+def beli(username:str, monster_shop_data :list[dict], item_shop_data :list[dict], potion_data:list[dict], monster_inventory_data :list[dict], item_inventory :list[dict] , monster_data :list[dict], user_data :list[dict], user_id:str):
     '''
     Membuat fungsi untuk membeli item atau monster yang dijual
     '''
@@ -80,13 +84,21 @@ def beli(username:str, monster_shop_data , item_shop_data , potion_data, monster
     else:
         print('Perintah anda salah! Ulangi perintah anda!')
         return beli(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data ,user_id)
-
-def beli_monster(username:str, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data ,user_id, coin):
+    
+###################### MEMBELI MONSTER ########################
+def beli_monster(username:str, monster_shop_data :list[dict] , item_shop_data :list[dict], potion_data:list[dict], monster_inventory_data :list[dict], item_inventory:list[dict] , monster_data:list[dict] , user_data:list[dict] ,user_id:str, coin:str):
     '''
     Membuat fungsi untuk membeli monster yang dijual
     '''
     coin = int(coin)
+    ids_list = []
+    for data in monster_shop_data:
+        ids_list.append(data['monster_id'])
     monster_id = input('Masukkan monster id: ')
+    if monster_id not in ids_list:
+        print('Id tidak tersedia, silahkan coba id yang lain.')
+        delay()
+        return shop_currency_page(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)
     for data in monster_data:
         for subdata in monster_shop_data:
             if monster_id == data['id']:
@@ -115,13 +127,27 @@ def beli_monster(username:str, monster_shop_data , item_shop_data , potion_data,
                 data['oc'] = str(coin-monster_cost)
                 
     return shop_currency_page(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)
+###################### MEMBELI MONSTER ########################
 
-def beli_potion(username:str, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data ,user_id, coin):
+
+###################### MEMBELI POTION ########################
+def beli_potion(username:str, monster_shop_data:list[dict] , item_shop_data:list[dict] , potion_data:list[dict], monster_inventory_data:list[dict] , item_inventory :list[dict], monster_data :list[dict], user_data :list[dict],user_id:str, coin:str):
     '''
     Membuat fungsi untuk membeli item/potion yang dijual
     '''
     coin = int(coin)
+    ids_list = []
+    for data in item_shop_data:
+        for subdata in potion_data:
+            if data['type'] == subdata['potion_name']:
+                ids_list.append(subdata['id'])
+            
     item_id = input('Masukkan id potion: ')
+    if item_id not in ids_list:
+        print('Id tidak tersedia, silahkan coba id yang lain.')
+        delay()
+        return shop_currency_page(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)
+    
     qty = int(input('Masukkan jumlah: '))
     for data in potion_data:
         for subdata in item_shop_data:
@@ -135,7 +161,8 @@ def beli_potion(username:str, monster_shop_data , item_shop_data , potion_data, 
     
     elif item_cost*qty > coin :
         print('OC-mu tidak cukup')
-    
+    elif qty>item_stock:
+        print('Kuantitas barang tidak mencukupi, silahkan ulangi')
     else:
         print(f'Berhasil membeli item: {qty} {item_type}. Item sudah masuk ke inventory-mu!')
         for subdata in item_shop_data:
@@ -149,8 +176,9 @@ def beli_potion(username:str, monster_shop_data , item_shop_data , potion_data, 
                 data['type'] = str(int(data['type']+qty))
                 
     return shop_currency_page(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)   
-
+###################### MEMBELI POTION ########################
+####################################################### FUNGSI UNTUK MEMBELI #######################################################
 if __name__ == '__main__':
-    monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data = dp.data_path()
+    monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data = dp.data_path('data')
     #  = pi.player_inventory('Asep_Spakbor', user_data , monster_inventory_data , item_inventory , monster_data)
     shop_currency_page('Asep_Spakbor', monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)

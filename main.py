@@ -13,8 +13,6 @@ from src import (
     _02_Login as login,
     _03_Logout as logout,
     _04_MenuAndHelp as menu_and_help,
-    # _05_Monster as monster,
-    # _06_Potion as potion,
     _07_Inventory as inventory,
     # _08_Battle as battle,
     _09_Arena as arena,
@@ -22,8 +20,6 @@ from src import (
     _11_Laboratory as laboratory,
     _12_ShopManagement as shop_management,
     _13_MonsterManagement as monster_management,
-    _14_Load as load,
-    # _15_Save as save,
     _16_Exit as exit_module,
     DesignUtilities as design,
     DataPath as dp,
@@ -37,7 +33,7 @@ def delay():
     '''
     Membuat delay pada screen dan clear screen di terminal
     '''
-    time.sleep(3)
+    time.sleep(1)
     os.system('cls')
 ####################################### IMPORTING SOME MODULES ######################################   
     
@@ -59,7 +55,7 @@ def start_menu(game_state:int,is_admin:bool,username:str, monster_shop_data:list
     elif command == 'help': ### HELP ####
         if game_state == 0:
             username = ''
-        menu_and_help.help_menu(username)
+        menu_and_help.help_menu(username,is_admin)
     elif command == 'register': ### REGISTER ####
         if is_admin:
             print('Anda tidak bisa register sebagai admin!')
@@ -110,8 +106,11 @@ def main_menu(game_state:int, is_admin:bool, username:str, monster_shop_data:lis
     elif command == 'arena': ### ARENA ####
         pass
     elif command == 'laboratory': ### LABORATORY ####
-        pass
+        print('Anda akan memasuki lab! Silahkan upgrade monster kesayangan anda!')
+        delay()
+        laboratory.laboratory(username, monster_inventory_data , user_data , monster_data)
     elif command == 'shop': ### SHOP ####
+        print('Anda akan memasuki shop! Silahkan beli barang dan monster kesukaan anda!')
         delay()
         shop_and_currency.shop_currency_page(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)
     elif command == 'back': ### BACK TO START ####
@@ -143,7 +142,8 @@ def admin_menu(game_state, is_admin, username, monster_shop_data:list[dict] , it
         delay()
         monster_management.pilihan_monster_management(monster_data)
     elif command == 'shop management' or command == '2': ### SHOP MANAGEMENT ####
-        pass 
+        delay()
+        shop_management.tampilan_awal(username, item_shop_data, monster_shop_data, monster_data, potion_data)
     elif command == 'back'or command == '3': ### BACK TO STAR ####
         delay()
         return start_menu(game_state, is_admin, username, monster_shop_data , item_shop_data, potion_data,  monster_inventory_data, item_inventory, monster_data, user_data)
@@ -157,7 +157,7 @@ def admin_menu(game_state, is_admin, username, monster_shop_data:list[dict] , it
 
 
 
-################################ F14 Load ######################################## 
+################################ F14 Load ##########################################
 
 # Inisialisasi Argument Parser
 parser = argparse.ArgumentParser(description='Buka folder.')
@@ -167,7 +167,7 @@ parser.add_argument('folder', nargs='?', default=None, help='mengakses folder cs
 args = parser.parse_args()
 # jika input tidak ada
 if args.folder is None:
-    print("Tidak ada nama folder yang diberikan!\nUsage : python main.py <nama_folder>")
+    print("Tidak ada nama folder yang diberikan!\nUsage : python main.py <data/nama_folder>")
     sys.exit()
 # memeriksa keberadaan folder
 if not os.path.exists(args.folder):
