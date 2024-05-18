@@ -9,7 +9,10 @@ def delay():
     Membuat delay pada screen dan clear screen di terminal
     '''
     time.sleep(1)
-    os.system('cls')
+    if os.name == 'nt':  # For Windows
+        os.system('cls')
+    else:  # For Unix/Linux/Mac
+        os.system('clear')
     
 
 def shop_currency_page(username:str, monster_shop_data:list[dict] , item_shop_data:list[dict] , potion_data:list[dict], monster_inventory_data :list[dict], item_inventory:list[dict] , monster_data:list[dict] , user_data:list[dict] ):
@@ -151,7 +154,7 @@ def beli_potion(username:str, monster_shop_data:list[dict] , item_shop_data:list
     qty = int(input('Masukkan jumlah: '))
     for data in potion_data:
         for subdata in item_shop_data:
-            if item_id == data['id']:
+            if item_id == data['id'] and data['potion_name'] == subdata['type']:
                 item_type = subdata['type']
                 item_cost = int(subdata['price'])
                 item_stock = int(subdata['stock'])
@@ -171,14 +174,20 @@ def beli_potion(username:str, monster_shop_data:list[dict] , item_shop_data:list
         for data in user_data:
             if user_id == data['id']:
                 data['oc'] = str(coin-(qty*item_cost))
+        temp = []
         for data in item_inventory:
             if user_id == data['user_id'] and item_type == data['type']:
-                data['type'] = str(int(data['type']+qty))
+                data['quantity'] = str(int(data['quantity'])+qty)
+                temp.append(data['type'])
                 
+        if not temp:
+            item_inventory.append({'user_id': str(user_id), 'type':str(item_type), 'quantity':str(qty)})
+    
+    delay()
     return shop_currency_page(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)   
 ###################### MEMBELI POTION ########################
 ####################################################### FUNGSI UNTUK MEMBELI #######################################################
 if __name__ == '__main__':
     monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data = dp.data_path('data')
     #  = pi.player_inventory('Asep_Spakbor', user_data , monster_inventory_data , item_inventory , monster_data)
-    shop_currency_page('Asep_Spakbor', monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)
+    shop_currency_page('bimo', monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)

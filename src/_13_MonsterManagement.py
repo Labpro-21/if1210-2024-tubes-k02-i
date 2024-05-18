@@ -9,7 +9,10 @@ def delay():
     Membuat delay pada screen dan clear screen di terminal
     '''
     time.sleep(0.5)
-    os.system('cls')
+    if os.name == 'nt':  # For Windows
+        os.system('cls')
+    else:  # For Unix/Linux/Mac
+        os.system('clear')
 
 def pilihan_monster_management(monster_list:list[dict]):
     '''

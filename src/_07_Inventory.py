@@ -1,4 +1,6 @@
 import CSVfunction as csv
+import DataPath as dp
+import PlayerInventory
 import os
 dirname = os.path.dirname(__file__)
 
@@ -8,7 +10,7 @@ def print_monster(cnt:int,monster:dict)->None:
     '''
     name = monster['type']
     level = monster['level']
-    hp = monster['hp']
+    hp = atribute_by_level(int(monster['hp']),int(monster['level']))
     print(f"{cnt}.Monster       (Name: {name}, Lvl: {level}, HP: {hp})")
 
 
@@ -51,9 +53,9 @@ def print_monster_details(monster:dict)->None:
     '''
     print("Monster")
     print(f"Name      : {monster['type']}")
-    print(f"ATK Power : {monster['atk_power']}")
-    print(f"DEF Power : {monster['def_power']}")
-    print(f"HP        : {monster['hp']}")
+    print(f"ATK Power : {atribute_by_level(int(monster['atk_power']),int(monster['level']))}")
+    print(f"DEF Power : {atribute_by_level(int(monster['def_power']),int(monster['level']))}")
+    print(f"HP        : {atribute_by_level(int(monster['hp']),int(monster['level']))}")
     print(f"Level     : {monster['level']}")
 
 
@@ -91,9 +93,16 @@ def print_details_by_id(data:dict)->None:
                         print_potion_details(item)
         else:
             print('Id item tidak ada di inventory, gunakan Id lain.')
+
+def atribute_by_level(atribute, level):
+    if level > 1:
+        atribute = atribute + round(level * atribute * 0.1)
+    return atribute
     
 if __name__ == '__main__' :
-    pass
-    # user_inventory('Asep_Spakbor')
+    monster_shop_data , item_shop_data, potion_data, monster_inventory_data, item_inventory, monster_data, user_data = dp.data_path('data')
+    player_inventory , coin = PlayerInventory.player_inventory('Asep_Spakbor', user_data , monster_inventory_data , item_inventory , monster_data)
+    print(player_inventory)
+    display_inventory(player_inventory,coin)
     
     

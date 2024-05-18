@@ -37,7 +37,10 @@ def player_inventory(username, user_data , monster_inventory_data , item_invento
         if user_id == potion['user_id']:
             player_inventory.append(potion)      
     return player_inventory, coin
+                    
 
 if __name__ == '__main__':
     monster_shop_data , item_shop_data, potion_data, monster_inventory_data, item_inventory, monster_data, user_data = dp.data_path('data')
     player_inventory('bimo', user_data , monster_inventory_data , item_inventory , monster_data)
+    
+

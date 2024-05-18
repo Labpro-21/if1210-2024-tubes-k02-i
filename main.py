@@ -14,7 +14,7 @@ from src import (
     _03_Logout as logout,
     _04_MenuAndHelp as menu_and_help,
     _07_Inventory as inventory,
-    # _08_Battle as battle,
+    _08_Battle as battle,
     _09_Arena as arena,
     _10_ShopAndCurrency as shop_and_currency,
     _11_Laboratory as laboratory,
@@ -23,8 +23,7 @@ from src import (
     _16_Exit as exit_module,
     DesignUtilities as design,
     DataPath as dp,
-    PlayerInventory
-    
+    PlayerInventory 
 )
 from src.GameState import game_state, username, is_admin #const
 
@@ -34,12 +33,15 @@ def delay():
     Membuat delay pada screen dan clear screen di terminal
     '''
     time.sleep(1)
-    os.system('cls')
+    if os.name == 'nt':  # For Windows
+        os.system('cls')
+    else:  # For Unix/Linux/Mac
+        os.system('clear')
 ####################################### IMPORTING SOME MODULES ######################################   
-    
-    
-    
-    
+
+
+
+
 ################################ START MENU ####################################### 
 def start_menu(game_state:int,is_admin:bool,username:str, monster_shop_data:list[dict] , item_shop_data:list[dict] , potion_data:list[dict],  monster_inventory_data:list[dict] , item_inventory:list[dict] , monster_data:list[dict] , user_data:list[dict]):
     '''
@@ -100,31 +102,34 @@ def main_menu(game_state:int, is_admin:bool, username:str, monster_shop_data:lis
         delay()
         player_inventory , coin = PlayerInventory.player_inventory(username, user_data , monster_inventory_data , item_inventory , monster_data)
         inventory.display_inventory(player_inventory,coin)
+        
     elif command == 'battle': ### BATTLE ####
-        pass
+        print('Anda akan memasuki medan pertempuran! Semangat')
+        delay()
+        battle.battle(username, monster_data, monster_inventory_data, potion_data, item_inventory, user_data)
         
     elif command == 'arena': ### ARENA ####
-        pass
+        print('Anda akan memasuki daerah arena!')
+        arena.arena(username, monster_data, monster_inventory_data, potion_data, item_inventory, user_data)
+        
     elif command == 'laboratory': ### LABORATORY ####
         print('Anda akan memasuki lab! Silahkan upgrade monster kesayangan anda!')
         delay()
         laboratory.laboratory(username, monster_inventory_data , user_data , monster_data)
+        
     elif command == 'shop': ### SHOP ####
         print('Anda akan memasuki shop! Silahkan beli barang dan monster kesukaan anda!')
         delay()
         shop_and_currency.shop_currency_page(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)
+        
     elif command == 'back': ### BACK TO START ####
         print('Akan kembali ke start menu.') 
         delay()
         return start_menu(game_state, is_admin, username, monster_shop_data, item_shop_data, potion_data, monster_inventory_data, item_inventory, monster_data, user_data)
+    
     else:
         print('Perintah anda salah, ulangi!') ### FALSE ####
-        
-    # 1. inventory
-    # 2. battle
-    # 3. arena
-    # 4. laboratory
-    # 5. shop
+
     delay()
     return main_menu(game_state, is_admin, username, monster_shop_data , item_shop_data, potion_data,  monster_inventory_data, item_inventory, monster_data, user_data)
 ################################ MAIN MENU ########################################

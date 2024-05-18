@@ -8,7 +8,10 @@ def delay():
     Membuat delay pada screen dan clear screen di terminal
     '''
     time.sleep(1)
-    os.system('cls')
+    if os.name == 'nt':  # For Windows
+        os.system('cls')
+    else:  # For Unix/Linux/Mac
+        os.system('clear')
     
 # monster_list=[]
 def laboratory(username:str, monster_inventory_data:list[dict] , user_data:list[dict] , monster_data:list[dict]):
@@ -24,6 +27,7 @@ def laboratory(username:str, monster_inventory_data:list[dict] , user_data:list[
             
 
     print(f'Selamat datang di laboratory {username}!!')
+    print('Tekan 0 untuk kembali ke menu utama.')
     monster_list = display_monster_inventory(user_id,monster_inventory_data, monster_data)
     display_upgrade_price()
     try:
@@ -66,6 +70,9 @@ def laboratory(username:str, monster_inventory_data:list[dict] , user_data:list[
                     print('Masukkan tidak valid')
                     delay()
                     return laboratory(username, monster_inventory_data , user_data , monster_data)
+        elif monster_id == 0:
+            print('Terimakasih telah berkunjung! Sampai bertemu kembali!')
+            delay()
         else:
             print("Tidak ada monster tersebut")
             delay()

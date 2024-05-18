@@ -491,8 +491,11 @@ def delay():
     '''
     Membuat delay pada screen dan clear screen di terminal
     '''
-    time.sleep(1)
-    os.system('cls')
+    time.sleep(3)
+    if os.name == 'nt':  # For Windows
+        os.system('cls')
+    else:  # For Unix/Linux/Mac
+        os.system('clear')
 
 def get_numeric_input(prompt):
     '''

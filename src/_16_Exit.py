@@ -15,12 +15,18 @@ def game_exit(username, user, item_inventories, item_shop, monster, monster_shop
         save.save(user, item_inventories, item_shop, monster, monster_shop, monster_inventory)
         print(f'Selamat tinggal agent {username}!')
         time.sleep(3)
-        os.system('cls')
+        if os.name == 'nt':  # For Windows
+            os.system('cls')
+        else:  # For Unix/Linux/Mac
+            os.system('clear')
         sys.exit()
     elif exit_input == 'n':
         print(f'Selamat tinggal agent {username}!')
         time.sleep(3)
-        os.system('cls')
+        if os.name == 'nt':  # For Windows
+            os.system('cls')
+        else:  # For Unix/Linux/Mac
+            os.system('clear')
         sys.exit()
 
 if __name__ == '__main__' :
