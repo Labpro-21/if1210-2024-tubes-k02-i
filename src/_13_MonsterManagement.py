@@ -45,8 +45,8 @@ def cek_kesamaan_nama(monster_list:list[dict], nama:str):
     for data in monster_list:
         if data['type']== nama:
             return True
-        else: 
-            return False
+
+    return False
 
 def tambah_monster_baru(monster_list:list[dict]):
     '''

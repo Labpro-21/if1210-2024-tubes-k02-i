@@ -94,7 +94,7 @@ def print_details_by_id(data:dict)->None:
         else:
             print('Id item tidak ada di inventory, gunakan Id lain.')
 
-def atribute_by_level(atribute, level):
+def atribute_by_level(atribute:int, level:int):
     if level > 1:
         atribute = atribute + round(level * atribute * 0.1)
     return atribute

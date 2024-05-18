@@ -6,7 +6,7 @@ import subprocess
 import PlayerInventory as pi
 dirname = os.path.dirname(__file__)
     
-def battle(username, monster_data, monster_inventory_data, potion_data, item_inventory, user_data):
+def battle(username:str, monster_data:list[dict], monster_inventory_data:list[dict], potion_data:list[dict], item_inventory:list[dict], user_data:list[dict]):
     '''
     Fungsi untuk memulai battle
     '''
@@ -304,12 +304,18 @@ __.-'               '-.__
     update_user_data(username, item_inventory, user_data, strength_qty, resilience_qty, healing_qty, coin)
             
 
-def atribute_by_level(atribute, level):
+def atribute_by_level(atribute:int, level:int):
+    '''
+    Menyesuaikan atribut monster berdasarkan level
+    '''
     if level > 1:
         atribute = atribute + round(level * atribute * 0.1)
     return atribute
 
-def update_user_data(username, item_inventory, user_data, qty_str, qty_res, qty_heal, coin):
+def update_user_data(username:str, item_inventory:list[dict], user_data:list[dict], qty_str:int, qty_res:int, qty_heal:int, coin:int):
+    '''
+    Update data dari user ketika setelah game
+    '''
     for data in user_data:
         if username == data['username']:
             user_id = data['id']
@@ -324,16 +330,10 @@ def update_user_data(username, item_inventory, user_data, qty_str, qty_res, qty_
             if data['type'] == 'healing':
                 data['quantity'] = str(qty_heal)
                 
-def print_hp_bar(name, hp, max_hp, bar_length=50):
-    """Prints a health bar for a character in the terminal.
-
-    Args:
-        name (str): Name of the character.
-        hp (float): Current HP of the character.
-        max_hp (float): Maximum HP of the character.
-        bar_length (int): Length of the HP bar in characters.
+def print_hp_bar(name:str, hp:int, max_hp:int, bar_length=50):
     """
-    
+    Mengeprint bar hp monster
+    """
     # Calculate the number of bar segments to be filled
     filled_length = int(bar_length * hp / max_hp)
     bar = '█' * filled_length + '-' * (bar_length - filled_length)

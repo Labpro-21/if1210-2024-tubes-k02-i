@@ -175,7 +175,7 @@ def lihat_potion(item_shop_list:list[dict]):
 
 
 ################################################## FUNGSI UNTUK MENAMBAH DATA #########################################################
-def tambah_monster(monster_not_in_shop_list, monster_shop_data, monster_data):
+def tambah_monster(monster_not_in_shop_list:list[dict], monster_shop_data:list[dict], monster_data:list[dict]):
     '''
     Fungsi untuk menambah monster
     '''
@@ -497,7 +497,7 @@ def delay():
     else:  # For Unix/Linux/Mac
         os.system('clear')
 
-def get_numeric_input(prompt):
+def get_numeric_input(prompt:str):
     '''
     Fungsi untuk mengecek apakah input merupakan valid integer atau tidak
     '''
