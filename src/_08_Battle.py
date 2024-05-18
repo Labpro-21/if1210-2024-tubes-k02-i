@@ -151,152 +151,155 @@ def battle(username, monster_data, monster_inventory_data, potion_data, item_inv
         print('============ USER TURN ============')
         print('''1. Attack\n2. Use Potion\n3. Quit''')
         
-
         while True:
             try:
                 user_choice = int(input('Pilih perintah: ')) # User memilih perintah
-                subprocess.run('cls', shell=True)
-                if user_choice == 1: # Ketika user memilih untuk Attack
-                    health_monster_enemy = math.floor(health_monster_enemy - reduced_attack_user) # HP monster musuh berkurang oleh ATK monster user yg sudah ter-RNG
-                    if health_monster_enemy <= 0: 
-                        health_monster_enemy = 0 # Mengembalikan HP monster musuh yang tidak boleh kurang dari 0
-                        win = True # Jika HP monster musuh sudah 0
-                        
-                    # Deskripsi penyerangan dan dampak pada monster musuh
-                    print(f'SKADIDODOO, {user_monster_choice_name} menyerang {monster_enemy_name} !!!\n')
-                    print(r'''
-            /\----/\_   
-            /         \   /|
-            |  | O    O | / |
-            |  | .vvvvv.|/  /
-        /   | |     |   /
-        /    | `^^^^^   /
-        | /|  |         /
-        / |    ___    |
-            \  |   |   |
-            |  |   |   |
-            \._\   \._\ 
-
-        ''')
-                    print_hp_bar(monster_enemy_name, health_monster_enemy, health_monster_enemy_max)
-                    print(f'Name : {monster_enemy_name}\nATK Power : {attack_power_monster_enemy}\nDEF Power : {defense_power_monster_enemy}\nHP : {health_monster_enemy}\nLevel : {level_monster_enemy}\n')
-                    print(f'# Penjelasan: ATT: {attack_user_rng}, Reduced by: {defense_user_rng}, ATT Results: {reduced_attack_user}\n')
-                    
-                    # Jika menang
-                    if win:
-                        print(f'Selamat anda mengalahkan monster {monster_enemy_name} !!!')
-                        print(f'Total OC yang diperoleh: {oc_generator}') # User mendapatkan OC coin dari hasil RNG dan menambahkannya pada database user
-                        user_monster_choice_health_power = user_monster_choice_health_power_max
-                        health_monster_enemy = health_monster_enemy_max 
-                        over = True # Permainan selesai
-                        coin = int(coin)
-                        coin += oc_generator
-                        break
-                    
-                    # Monster musuh gantian menyerang
-                    print(f'============ TURN {turn_round} ({monster_enemy_name}) ============')
-                    print('============ ENEMY TURN ============')
-                    user_monster_choice_health_power = math.floor(user_monster_choice_health_power - reduced_attack_enemy) # HP monster user berkurang oleh ATK monster user yg sudah ter-RNG
-                    
-                    if user_monster_choice_health_power <= 0:
-                        user_monster_choice_health_power = 0 # Mengembalikan HP monster user yang tidak boleh kurang dari 0
-                        lose = True # Jika HP monster user sudah 0
-                        
-                    # Deskripsi penyerangan dan dampak pada monster user    
-                    print(f'SKADLIDODOR, {monster_enemy_name} menyerang {user_monster_choice_name} !!!\n')
-                    print(r'''
-            _/\----/\\   
-            /         \\     /\\
-            |  O    O   |   |  |
-            |  .vvvvv.  |   |  |
-            /  |     |   \\  |  |
-            /   `^^^^^'    \\ |  |
-        ./  /|            \\|  |_
-        /   / |         |\\__     /
-        \\  /  |         |   |__|
-        `'   |  _      |
-            _.-'-' `-'-'.'_
-    __.-'               '-.__
-
-        ''')
-                    print_hp_bar(user_monster_choice_name, user_monster_choice_health_power, user_monster_choice_health_power_max)
-                    print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
-                    print(f'# Penjelasan: ATT: {attack_enemy_rng}, Reduced by: {defense_enemy_rng}, ATT Results: {reduced_attack_enemy}\n')
-                    
-                    # Jika kalah
-                    if lose:
-                        print(f'Tidakkk, kamu telah dikalahkan oleh {monster_enemy_name} !!!')
-                        user_monster_choice_health_power = user_monster_choice_health_power_max
-                        health_monster_enemy = health_monster_enemy_max 
-                        over = True # Permainan selesai
-                        break
-                    turn_round += 1 # Round battle bertambah apabila kedua pihak monster selesai menyerang
-
-                elif user_choice == 2: # Ketika user memilih potion
-                    print('============ POTION LIST ============')
-                    # Deskripsi potion yang tersedia
-                    print(f'''1. Strength Potion (Qty: {strength_qty}) - Increases ATK Power\n2. Resilience Potion (Qty: {resilience_qty}) - Increases DEF Power\n3. Healing Potion (Qty: {healing_qty}) - Restores Health\n4. Cancel''')
-                    while True:
-                        try:
-                            user_potion_choice = int(input('Pilih perintah: ')) # User memilih potion atau cancel
-                            break
-                        except ValueError:
-                            print('Input anda salah! Ulangi.')
-                    
-                    if user_potion_choice == 1: # Jika user memilih potion strength
-                        if strength_qty == 0: # Jika potion strength tidak tersedia
-                            print('Wah, kamu sedang tidak memiliki ramuan ini, silahkan pilih ramuan lain!')
-                        else: # Jika potion strength tersedia
-                            user_monster_choice_attack_power *= (strength_percentage + 100) / 100 # Attack power bertambah
-                            user_monster_choice_attack_power = math.floor(user_monster_choice_attack_power)
-                            strength_qty -= 1 # Ketersediaan potion berkurang 1
-                            
-                            # Deskripsi perubahan pada monster user
-                            print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
-                            print(f'# Penjelasan: Attack power monster bertambah sebesar {strength_percentage}% menjadi: {user_monster_choice_attack_power}')
-                            
-                                    
-                    elif user_potion_choice == 2: # Jika user memilih potion resilience
-                        if resilience_qty == 0: # Jika poton resilience tidak tersedia
-                            print('Wah, kamu sedang tidak memiliki ramuan ini, silahkan pilih ramuan lain!')
-                        else: # Jika potion resilience tersedia
-                            user_monster_choice_defense_power *= (resilience_percentage + 100) / 100
-                            user_monster_choice_defense_power = math.floor(user_monster_choice_defense_power)
-                            resilience_qty -= 1 # Ketersediaan potion berkurang 1
-                            
-                            # Deskripsi perubahan pada monster user
-                            print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
-                            print(f'# Penjelasan: Defense power monster bertambah sebesar {resilience_percentage}% menjadi: {user_monster_choice_defense_power}')
-                            
-                    elif user_potion_choice == 3: # Jika user memilih potion healing
-                        if healing_qty == 0: # Jika potion healing tidak tersedia
-                            print('Wah, kamu sedang tidak memiliki ramuan ini, silahkan pilih ramuan lain!')
-                        else: # Jika potion healing tersedia
-                            user_monster_choice_health_power *= (healing_percentage + 100) / 100
-                            user_monster_choice_health_power = math.floor(user_monster_choice_health_power)
-                            healing_qty -= 1           
-                            
-                            # Deskripsi perubahan pada monster user
-                            print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
-                            print(f'# Penjelasan: Health power monster bertambah sebesar {healing_percentage}% menjadi: {user_monster_choice_health_power}')
-                        
-                        if user_monster_choice_health_power > user_monster_choice_health_power_max: # Jika HP monster user bertambah lebih dari maksimum HP-nya
-                            user_monster_choice_health_power = user_monster_choice_health_power_max # HP monster user akan sama dengan HP monster maksimumnya
-                            
-                    elif user_potion_choice == 4: # Jika user memilih cancel
-                        over = False # Kembali looping 
-                    
-                    else: # Jika pilihan user tidak tersedia
-                        print('Perintah yang diberikan tidak tersedia, coba ulangi!')
-
-                elif user_choice == 3: # Jika user memilih Quit
-                    print('Anda berhasil kabur dari BATTLE !')
-                    break 
-                
-                else:
-                    print('Perintah yang diberikan tidak tersedia, coba ulangi!')
+                break
             except ValueError:
                 print('Input harus berupa bilangan! Ulangi')
+            
+        subprocess.run('cls', shell=True)
+        if user_choice == 1: # Ketika user memilih untuk Attack
+            health_monster_enemy = math.floor(health_monster_enemy - reduced_attack_user) # HP monster musuh berkurang oleh ATK monster user yg sudah ter-RNG
+            if health_monster_enemy <= 0: 
+                health_monster_enemy = 0 # Mengembalikan HP monster musuh yang tidak boleh kurang dari 0
+                win = True # Jika HP monster musuh sudah 0
+                
+            # Deskripsi penyerangan dan dampak pada monster musuh
+            print(f'SKADIDODOO, {user_monster_choice_name} menyerang {monster_enemy_name} !!!\n')
+            print(r'''
+    /\----/\_   
+    /         \   /|
+    |  | O    O | / |
+    |  | .vvvvv.|/  /
+/   | |     |   /
+/    | `^^^^^   /
+| /|  |         /
+/ |    ___    |
+    \  |   |   |
+    |  |   |   |
+    \._\   \._\ 
+
+''')
+            print_hp_bar(monster_enemy_name, health_monster_enemy, health_monster_enemy_max)
+            print(f'Name : {monster_enemy_name}\nATK Power : {attack_power_monster_enemy}\nDEF Power : {defense_power_monster_enemy}\nHP : {health_monster_enemy}\nLevel : {level_monster_enemy}\n')
+            print(f'# Penjelasan: ATT: {attack_user_rng}, Reduced by: {defense_user_rng}, ATT Results: {reduced_attack_user}\n')
+            
+            # Jika menang
+            if win:
+                print(f'Selamat anda mengalahkan monster {monster_enemy_name} !!!')
+                print(f'Total OC yang diperoleh: {oc_generator}') # User mendapatkan OC coin dari hasil RNG dan menambahkannya pada database user
+                user_monster_choice_health_power = user_monster_choice_health_power_max
+                health_monster_enemy = health_monster_enemy_max 
+                over = True # Permainan selesai
+                coin = int(coin)
+                coin += oc_generator
+                cmd = input('Tekan apapun untuk keluar: ')
+                break
+            
+            # Monster musuh gantian menyerang
+            print(f'============ TURN {turn_round} ({monster_enemy_name}) ============')
+            print('============ ENEMY TURN ============')
+            user_monster_choice_health_power = math.floor(user_monster_choice_health_power - reduced_attack_enemy) # HP monster user berkurang oleh ATK monster user yg sudah ter-RNG
+            
+            if user_monster_choice_health_power <= 0:
+                user_monster_choice_health_power = 0 # Mengembalikan HP monster user yang tidak boleh kurang dari 0
+                lose = True # Jika HP monster user sudah 0
+                
+            # Deskripsi penyerangan dan dampak pada monster user    
+            print(f'SKADLIDODOR, {monster_enemy_name} menyerang {user_monster_choice_name} !!!\n')
+            print(r'''
+    _/\----/\\   
+    /         \\     /\\
+    |  O    O   |   |  |
+    |  .vvvvv.  |   |  |
+    /  |     |   \\  |  |
+    /   `^^^^^'    \\ |  |
+./  /|            \\|  |_
+/   / |         |\\__     /
+\\  /  |         |   |__|
+`'   |  _      |
+    _.-'-' `-'-'.'_
+__.-'               '-.__
+
+''')
+            print_hp_bar(user_monster_choice_name, user_monster_choice_health_power, user_monster_choice_health_power_max)
+            print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
+            print(f'# Penjelasan: ATT: {attack_enemy_rng}, Reduced by: {defense_enemy_rng}, ATT Results: {reduced_attack_enemy}\n')
+            
+            # Jika kalah
+            if lose:
+                print(f'Tidakkk, kamu telah dikalahkan oleh {monster_enemy_name} !!!')
+                user_monster_choice_health_power = user_monster_choice_health_power_max
+                health_monster_enemy = health_monster_enemy_max 
+                over = True # Permainan selesai
+                cmd = input('Tekan apapun untuk keluar: ')
+                break
+            turn_round += 1 # Round battle bertambah apabila kedua pihak monster selesai menyerang
+
+        elif user_choice == 2: # Ketika user memilih potion
+            print('============ POTION LIST ============')
+            # Deskripsi potion yang tersedia
+            print(f'''1. Strength Potion (Qty: {strength_qty}) - Increases ATK Power\n2. Resilience Potion (Qty: {resilience_qty}) - Increases DEF Power\n3. Healing Potion (Qty: {healing_qty}) - Restores Health\n4. Cancel''')
+            while True:
+                try:
+                    user_potion_choice = int(input('Pilih perintah: ')) # User memilih potion atau cancel
+                    break
+                except ValueError:
+                    print('Input anda salah! Ulangi.')
+            
+            if user_potion_choice == 1: # Jika user memilih potion strength
+                if strength_qty == 0: # Jika potion strength tidak tersedia
+                    print('Wah, kamu sedang tidak memiliki ramuan ini, silahkan pilih ramuan lain!')
+                else: # Jika potion strength tersedia
+                    user_monster_choice_attack_power *= (strength_percentage + 100) / 100 # Attack power bertambah
+                    user_monster_choice_attack_power = math.floor(user_monster_choice_attack_power)
+                    strength_qty -= 1 # Ketersediaan potion berkurang 1
+                    
+                    # Deskripsi perubahan pada monster user
+                    print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
+                    print(f'# Penjelasan: Attack power monster bertambah sebesar {strength_percentage}% menjadi: {user_monster_choice_attack_power}')
+                    
+                            
+            elif user_potion_choice == 2: # Jika user memilih potion resilience
+                if resilience_qty == 0: # Jika poton resilience tidak tersedia
+                    print('Wah, kamu sedang tidak memiliki ramuan ini, silahkan pilih ramuan lain!')
+                else: # Jika potion resilience tersedia
+                    user_monster_choice_defense_power *= (resilience_percentage + 100) / 100
+                    user_monster_choice_defense_power = math.floor(user_monster_choice_defense_power)
+                    resilience_qty -= 1 # Ketersediaan potion berkurang 1
+                    
+                    # Deskripsi perubahan pada monster user
+                    print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
+                    print(f'# Penjelasan: Defense power monster bertambah sebesar {resilience_percentage}% menjadi: {user_monster_choice_defense_power}')
+                    
+            elif user_potion_choice == 3: # Jika user memilih potion healing
+                if healing_qty == 0: # Jika potion healing tidak tersedia
+                    print('Wah, kamu sedang tidak memiliki ramuan ini, silahkan pilih ramuan lain!')
+                else: # Jika potion healing tersedia
+                    user_monster_choice_health_power *= (healing_percentage + 100) / 100
+                    user_monster_choice_health_power = math.floor(user_monster_choice_health_power)
+                    healing_qty -= 1           
+                    
+                    # Deskripsi perubahan pada monster user
+                    print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
+                    print(f'# Penjelasan: Health power monster bertambah sebesar {healing_percentage}% menjadi: {user_monster_choice_health_power}')
+                
+                if user_monster_choice_health_power > user_monster_choice_health_power_max: # Jika HP monster user bertambah lebih dari maksimum HP-nya
+                    user_monster_choice_health_power = user_monster_choice_health_power_max # HP monster user akan sama dengan HP monster maksimumnya
+                    
+            elif user_potion_choice == 4: # Jika user memilih cancel
+                over = False # Kembali looping 
+            
+            else: # Jika pilihan user tidak tersedia
+                print('Perintah yang diberikan tidak tersedia, coba ulangi!')
+
+        elif user_choice == 3: # Jika user memilih Quit
+            print('Anda berhasil kabur dari BATTLE !')
+            break 
+        
+        else:
+            print('Perintah yang diberikan tidak tersedia, coba ulangi!')
 
     update_user_data(username, item_inventory, user_data, strength_qty, resilience_qty, healing_qty, coin)
             

@@ -192,6 +192,7 @@ def arena(username, monster_data, monster_inventory_data, potion_data, item_inve
                     # Permainan selesai
                     over = True
                     clear = True
+                    
                     break
                 
                 # Monster musuh gantian menyerang
@@ -231,7 +232,6 @@ def arena(username, monster_data, monster_inventory_data, potion_data, item_inve
                     # Permainan selesai
                     over = True 
                     clear = True
-                
                 turn_round += 1
 
             elif user_choice == 2: # Ketika user memilih potion
@@ -303,6 +303,7 @@ def arena(username, monster_data, monster_inventory_data, potion_data, item_inve
             print(f'OC Prize : {oc_prize}\nJumlah stage : {stage_round}\nDamage diberikan : {math.floor(total_attack_user)}\nDamage diterima : {math.floor(total_attack_enemy)}\n')
             coin = int(coin)
             coin += oc_prize
+            cmd = input('Tekan apapun untuk keluar: ')
             
         elif stage_round >= 5: # Jika stage telah selesai
             print('Selamat! Anda telah menyelesaikan semua stage')
@@ -311,6 +312,7 @@ def arena(username, monster_data, monster_inventory_data, potion_data, item_inve
             coin = int(coin)
             coin += oc_prize
             clear = True
+            cmd = input('Tekan apapun untuk keluar: ')
             
         elif win: # Jika menang dalam battle di arena
             print('Menuju ke stage berikutnya....')

@@ -45,20 +45,11 @@ def lihat(username:str, monster_shop_data:list[dict] , item_shop_data :list[dict
     '''
     cmd = input('Mau lihat apa? (monster/potion)?: ')          
     if cmd == 'monster':
-        print("ID  |   Name/Type  | ATK Power | DEF Power | HP     | Stock  | Harga    ")
-        print("-"*70)
-        for data in monster_shop_data :
-            for subdata in monster_data:
-                if subdata['id'] == data['monster_id']:
-                    print(f"{subdata['id']:<3} | {subdata['type']:<12} | {subdata['atk_power']:<9} | {subdata['def_power']:<9} | {subdata['hp']:<6} | {data['stock']:<6} | {data['price']}")
+        lihat_monster(monster_shop_data, monster_data)
         return shop_currency_page(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)
     elif cmd == 'potion':
-        print('ID  | Type         | Stok   | Harga')
-        print("-"*40)
-        for data in potion_data:
-            for subdata in item_shop_data:
-                if data['potion_name'] == subdata['type']:
-                    print(f"{data['id']:<3} | {subdata['type']:<12} | {subdata['stock']:<6} | {subdata['price']}")
+        item_shop_list = item_shop_arr(item_shop_data,potion_data)
+        lihat_potion(item_shop_list)
         return shop_currency_page(username, monster_shop_data , item_shop_data , potion_data,  monster_inventory_data , item_inventory , monster_data , user_data )
     else:
         print('Perintah anda salah! Ulangi perintah anda.')
@@ -187,6 +178,63 @@ def beli_potion(username:str, monster_shop_data:list[dict] , item_shop_data:list
     return shop_currency_page(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)   
 ###################### MEMBELI POTION ########################
 ####################################################### FUNGSI UNTUK MEMBELI #######################################################
+
+############################################### OTHER UTILITIES ###############################################################
+def count_char_max(data_list:list[dict[str,str]], kolom:str, header:str):
+    '''
+    Fungsi untuk mengetahui karakter maksimal dalam kolom
+    '''
+    char_max = len(header)
+    for i in range(len(data_list)):
+        if len(data_list[i][kolom]) > char_max:
+            char_max = len(data_list[i][kolom])
+    return char_max
+def lihat_monster(monster_shop_data:list[dict], monster_data:list[dict]):
+    '''
+    Fungsi untuk melihat monster
+    '''
+    list_of_len = [count_char_max(monster_shop_data, 'monster_id', 'ID'),
+                    count_char_max(monster_data, 'type', 'Name/Type'),
+                    count_char_max(monster_data, 'atk_power', 'ATK Power'),
+                    count_char_max(monster_data, 'def_power', 'DEF Power'),
+                    count_char_max(monster_data, 'hp', 'HP'),
+                    count_char_max(monster_shop_data,'stock', 'Stok'),
+                    count_char_max(monster_shop_data, 'price', 'Harga')]
+    
+    print(f"{'ID':<{list_of_len[0]}} | {'Name/Type':<{list_of_len[1]}} | {'ATK Power':<{list_of_len[2]}} | {'DEF Power':<{list_of_len[3]}} | {'HP':<{list_of_len[4]}} | {'Stok':<{list_of_len[5]}} | {'Harga':<{list_of_len[6]}}")
+    print("-"*60)
+    for data in monster_shop_data :
+        for subdata in monster_data:
+            if subdata['id'] == data['monster_id']:
+                print(f"{subdata['id']:<{list_of_len[0]}} | {subdata['type']:<{list_of_len[1]}} | {subdata['atk_power']:<{list_of_len[2]}} | {subdata['def_power']:<{list_of_len[3]}} | {subdata['hp']:<{list_of_len[4]}} | {data['stock']:<{list_of_len[5]}} | {data['price']}")
+
+def lihat_potion(item_shop_list:list[dict]):
+    '''
+    Fungsi untuk melihat potion/item
+    '''
+    list_of_len = [count_char_max(item_shop_list, 'id', 'ID'),
+                    count_char_max(item_shop_list, 'type', 'Name/Type'),
+                    count_char_max(item_shop_list,'stock', 'Stok'),
+                    count_char_max(item_shop_list, 'price', 'Harga')]
+    
+    print(f"{'ID':<{list_of_len[0]}} | {'Name/Type':<{list_of_len[1]}} | {'Stok':<{list_of_len[2]}} | {'Harga':<{list_of_len[3]}}")
+    print("-"*40)
+    for data in item_shop_list :
+        print(f"{data['id']:<{list_of_len[0]}} | {data['type']:<{list_of_len[1]}} | {data['stock']:<{list_of_len[2]}} | {data['price']:<{list_of_len[3]}}")
+
+def item_shop_arr(item_shop_data:list[dict],potion_data:list[dict]):
+    '''
+    Membuat list item yang terdapat dalam shop beserta id-nya
+    '''
+    item_shop_list = []
+    for data in potion_data:
+            for subdata in item_shop_data:
+                if data['potion_name'] == subdata['type']:
+                    item_shop_list.append({'id': data['id'],'type': subdata['type'], 'stock': subdata['stock'],'price': subdata['price']})
+    return item_shop_list
+        
+############################################### OTHER UTILITIES ###############################################################
+
 if __name__ == '__main__':
     monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data = dp.data_path('data')
     #  = pi.player_inventory('Asep_Spakbor', user_data , monster_inventory_data , item_inventory , monster_data)

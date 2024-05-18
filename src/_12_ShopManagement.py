@@ -247,7 +247,7 @@ def tambah_potion(item_not_in_shop_list:list[dict], item_shop_list:list[dict], i
     item_shop_data.append({'type': nama_item, 'stock': stok_baru, 'price': harga_baru})
     print(f"Proses menambahkan {nama_item} ke dalam shop telah berhasil!")
 
-################################################## FUNGSI UNTUK MELIHAT DATA #########################################################
+################################################## FUNGSI UNTUK MENAMBAH DATA #########################################################
 
 
 

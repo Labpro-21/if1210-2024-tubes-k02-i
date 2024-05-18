@@ -27,10 +27,7 @@ def pilihan_monster_management(monster_list:list[dict]):
     pil = input("Anda ingin pilih aksi mana (1/2/3)?: ")
     if pil=='1' :
         delay()
-        print("ID |   Name/Type   | ATK Power | DEF Power | HP ")
-        print("-"*50)
-        for data in monster_list :
-            print(f"{data['id']:<3} | {data['type']:<12} | {data['atk_power']:<9} | {data['def_power']:<9} | {data['hp']} ")
+        lihat_monster(monster_list)
         return pilihan_monster_management(monster_list)
     elif pil=='2':
         return tambah_monster_baru(monster_list)
@@ -109,6 +106,32 @@ def tambah_monster_ke_database(monster_list:list[dict],monster_baru:dict):
     else:
         print('Perintah anda salah')
         return pilihan_monster_management(monster_list)
+    
+def count_char_max(data_list:list[dict[str,str]], kolom:str, header:str):
+    '''
+    Fungsi untuk mengetahui karakter maksimal dalam kolom
+    '''
+    char_max = len(header)
+    for i in range(len(data_list)):
+        if len(data_list[i][kolom]) > char_max:
+            char_max = len(data_list[i][kolom])
+    return char_max
+
+def lihat_monster(monster_data:list[dict]):
+    '''
+    Fungsi untuk melihat monster
+    '''
+    list_of_len = [count_char_max(monster_data, 'id', 'ID'),
+                    count_char_max(monster_data, 'type', 'Name/Type'),
+                    count_char_max(monster_data, 'atk_power', 'ATK Power'),
+                    count_char_max(monster_data, 'def_power', 'DEF Power'),
+                    count_char_max(monster_data, 'hp', 'HP')]
+    
+    print("Memuat data Monster yang belum ada di shop")
+    print(f"{'ID':<{list_of_len[0]}} | {'Name/Type':<{list_of_len[1]}} | {'ATK Power':<{list_of_len[2]}} | {'DEF Power':<{list_of_len[3]}} | {'HP':<{list_of_len[4]}}")
+    print("-"*50)
+    for data in monster_data :
+        print(f"{data['id']:<{list_of_len[0]}} | {data['type']:<{list_of_len[1]}} | {data['atk_power']:<{list_of_len[2]}} | {data['def_power']:<{list_of_len[3]}} | {data['hp']:<{list_of_len[4]}}")
 
 if __name__ == "__main__":
     monster_shop_data , item_shop_data , potion_data,  monster_inventory_data , item_inventory , monster_data, user_data = dp.data_path('data')
