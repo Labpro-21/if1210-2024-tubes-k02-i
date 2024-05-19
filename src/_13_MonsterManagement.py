@@ -14,13 +14,20 @@ def delay():
     else:  # For Unix/Linux/Mac
         os.system('clear')
 
-def pilihan_monster_management(monster_list:list[dict]):
+def tampilan_awal(monster_list:list[dict]):
     '''
-    Membuat fungsi untuk memilih dalam monster management
+    Membuat tampilan pertama kali ketika masuk ke Monster Management
     '''
     print("Selamat Datang Para Agen")
     print("Di sini adalah tempat database para monster.")
     print("-"*50)
+    return pilihan_monster_management(monster_list)
+
+def pilihan_monster_management(monster_list:list[dict]):
+    '''
+    Membuat fungsi untuk memilih dalam monster management
+    '''
+    print(". . .")
     print("[1] Tampilkan semua monster yang ada")
     print("[2] Tambahkan monster baru")
     print('[3] Untuk kembali ke menu admin')
@@ -32,6 +39,8 @@ def pilihan_monster_management(monster_list:list[dict]):
     elif pil=='2':
         return tambah_monster_baru(monster_list)
     elif pil=='3':
+        print("Keluar dari Monster Management")
+        print(". . .")
         return None
     else:
         print('Input anda salah, ulangi!')
@@ -63,7 +72,7 @@ def tambah_monster_baru(monster_list:list[dict]):
     valid_int = set("0123456789")
     atk = input("ATK Power Monster Baru : ")
     while not all(char in valid_int for char in atk):
-        print("ATK Power harus dalam angka...")
+        print("ATK Power harus dalam angka yang bernilai positif...")
         print("Silakan coba lagi!")
         atk = input("ATK Power Monster Baru : ")
     Atk = int(atk)
@@ -135,4 +144,4 @@ def lihat_monster(monster_data:list[dict]):
 
 if __name__ == "__main__":
     monster_shop_data , item_shop_data , potion_data,  monster_inventory_data , item_inventory , monster_data, user_data = dp.data_path('data')
-    pilihan_monster_management(monster_data)
+    tampilan_awal(monster_data)
