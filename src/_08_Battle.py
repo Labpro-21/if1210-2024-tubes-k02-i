@@ -62,15 +62,19 @@ def battle(username:str, monster_data:list[dict], monster_inventory_data:list[di
         if 'id' in data:
             print(f'{index}. {data["type"]}, Level = {data["level"]}')
             monster_ids.append(str(index))
-            
-    # User memanggil monster yang tersedia dan memanggil fungsi is_include
+
+    # User memilih monster untuk bertarung
     user_monster_choice = input('Pilih monster untuk bertarung: ')
 
-    # Looping terjadi apabila inputan user_monster_choice tidak sesuai dalam range
+    # Loop hingga input sesuai dan tersedia
     while user_monster_choice not in monster_ids:
-        print('''Pilihan monster tidak tersedia! Coba lagi!\n''')
-        user_monster_choice = int(input('Pilih monster untuk bertarung: ')) # Looping menghasilkan input baru untuk diperiksa dalam fungsi is_include hingga berhasil
+        print('Pilihan monster tidak tersedia! Coba lagi!\n')
+        user_monster_choice = input('Pilih monster untuk bertarung: ')
 
+    # Ubah pilihan ke integer
+    user_monster_choice = int(user_monster_choice)
+    
+    # Memilah nama, atk, def, dan health power monster user
     user_monster_choice_list = player_inventory[int(user_monster_choice)-1]
     user_monster_level = int(player_inventory[int(user_monster_choice)-1]['level'])
     
@@ -303,7 +307,11 @@ __.-'               '-.__
 
     update_user_data(username, item_inventory, user_data, strength_qty, resilience_qty, healing_qty, coin)
             
-
+def is_include(user_monster_choice: int, idx: int) -> int :
+    '''
+    Fungsi untuk mengembalikan pilihan monster di range yang tersedia
+    '''
+    return 0 < user_monster_choice <= idx
 def atribute_by_level(atribute:int, level:int):
     '''
     Menyesuaikan atribut monster berdasarkan level
