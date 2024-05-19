@@ -62,69 +62,109 @@ def memilih(username:str, item_shop_data:list[dict], monster_shop_data:list[dict
     
     print("[1] lihat, [2] tambah, [3] ubah, [4] hapus, [5] keluar ")
     pilihan = input("Mau pilih aksi yang mana? : ")
-
     
     if pilihan=="lihat" or pilihan=="1" : ############### MENU LIHAT #################
-        jenis = input("Mau lihat apa? (monster/potion) : ")
-        if jenis=="monster" :
-            delay()
-            lihat_monster(monster_shop_data, monster_data)
-        elif jenis=="potion" :
-            delay()
-            lihat_potion(item_shop_list)
-            
+        validasi = False 
+        while validasi == False :
+            jenis = input("Mau lihat apa? (monster/potion) : ")
+            if jenis=="monster" :
+                validasi == True
+                delay()
+                lihat_monster(monster_shop_data, monster_data)
+                break
+            elif jenis=="potion" :
+                validasi == True
+                delay()
+                lihat_potion(item_shop_list)
+                break
+            else : 
+                validasi == False 
+                print("Ups, Pilih antara monster atau potion!")
+                print(". . .")
+
     elif pilihan=="tambah" or pilihan=="2" : ############### MENU TAMBAH #################
-        jenis = input("Mau tambah apa? (monster/potion) : ")
-        if jenis=="monster" :
-            if len(monster_not_in_shop_list)>0:
-                delay()
-                tambah_monster(monster_not_in_shop_list, monster_shop_data, monster_data)
-            else:
-                print('Semua monster telah ada di shop.')
-                delay()
+        validasi = False 
+        while validasi == False :
+            jenis = input("Mau tambah apa? (monster/potion) : ")
+            if jenis=="monster" :
+                validasi = True
+                if len(monster_not_in_shop_list)>0:
+                    delay()
+                    tambah_monster(monster_not_in_shop_list, monster_shop_data, monster_data)
+                else:
+                    print('Semua monster telah ada di shop.')
+                    delay()
+                break
+            elif jenis=="potion" :
+                validasi = True
+                if len(item_not_in_shop_list)>0:
+                    delay()
+                    tambah_potion(item_not_in_shop_list, item_shop_list, item_shop_data, potion_data)
+                else:
+                    print('Semua item telah berada di shop.')
+                    delay()
+                break
+            else : 
+                validasi = False 
+                print("Ups, Pilih antara monster atau potion!")
+                print(". . .")
                 
-        elif jenis=="potion" :
-            if len(item_not_in_shop_list)>0:
-                delay()
-                tambah_potion(item_not_in_shop_list, item_shop_list, item_shop_data, potion_data)
-            else:
-                print('Semua item telah berada di shop.')
-                delay()
+
     elif pilihan=="ubah" or pilihan=="3" : ############### MENU UBAH #################
-        jenis = input("Mau ubah apa? (monster/potion) : ")
-        if jenis=="monster" :
-            if len(monster_shop_data)>0:
-                delay()
-                ubah_monster(monster_shop_data, monster_data)
-            else:
-                print('Tidak bisa mengubah, data tidak ada')
-                delay()
-                
-        elif jenis=="potion" :
-            if len(item_shop_list)>0:
-                delay()
-                ubah_potion(item_shop_list, item_shop_data)
-            else:
-                print('Tidak bisa mengubah, data tidak ada')
-                delay()
+        validasi = False 
+        while validasi == False :
+            jenis = input("Mau ubah apa? (monster/potion) : ")
+            if jenis=="monster" :
+                validasi = True 
+                if len(monster_shop_data)>0:
+                    delay()
+                    ubah_monster(monster_shop_data, monster_data)
+                else:
+                    print('Tidak bisa mengubah, data tidak ada')
+                    delay()
+                break
+                    
+            elif jenis=="potion" :
+                validasi = True 
+                if len(item_shop_list)>0:
+                    delay()
+                    ubah_potion(item_shop_list, item_shop_data)
+                else:
+                    print('Tidak bisa mengubah, data tidak ada')
+                    delay()
+                break
+            else : 
+                validasi = False 
+                print("Ups, Pilih antara monster atau potion!")
+                print(". . .")
             
     elif pilihan=="hapus" or pilihan=="4" : ############### MENU HAPUS #################
-        jenis = input("Mau hapus apa? (monster/potion) : ")
-        if jenis=="monster" :
-            if len(monster_shop_data)>0:
-                delay()
-                monster_shop_data = hapus_monster(monster_shop_data, monster_data)
-            else:
-                print('Tidak bisa menghapus, data tidak ada')
-                delay()
-                
-        elif jenis=="potion" :
-            if len(item_shop_list)>0:
-                delay()
-                item_shop_data = hapus_potion(item_shop_list, item_shop_data)
-            else:
-                print('Tidak bisa menghapus, data tidak ada')
-                delay()
+        validasi = False 
+        while validasi == False :
+            jenis = input("Mau hapus apa? (monster/potion) : ")
+            if jenis=="monster" :
+                validasi = True 
+                if len(monster_shop_data)>0:
+                    delay()
+                    monster_shop_data = hapus_monster(monster_shop_data, monster_data)
+                else:
+                    print('Tidak bisa menghapus, data tidak ada')
+                    delay()
+                break
+                    
+            elif jenis=="potion" :
+                validasi = True
+                if len(item_shop_list)>0:
+                    delay()
+                    item_shop_data = hapus_potion(item_shop_list, item_shop_data)
+                else:
+                    print('Tidak bisa menghapus, data tidak ada')
+                    delay()
+                break
+            else : 
+                validasi = False 
+                print("Ups, Pilih antara monster atau potion!")
+                print(". . .")
                 
     elif pilihan=="keluar" or pilihan=="5" : ############### MENU KELUAR #################
         keluar(username)
@@ -269,10 +309,10 @@ def ubah_monster(monster_shop_data:list[dict], monster_data:list[dict]):
     if Id not in ids_list:
         print('Tidak tersedia id tersebut, pilih id yang lain')
         delay()
-        return ubah_monster(monster_data, monster_data)
-    
-    stok_baru = get_numeric_input("Masukkan stok baru monster : ")
-    harga_baru = get_numeric_input("Masukkan harga baru monster : ")
+        return ubah_monster(monster_shop_data, monster_data)
+
+    stok_baru = get_numeric_input_boleh_kosong("Masukkan stok baru monster : ", allow_empty=True)
+    harga_baru = get_numeric_input_boleh_kosong("Masukkan harga baru monster : ", allow_empty=True)
 
     if stok_baru != "" and harga_baru != "" :
         for subdata in monster_shop_data:
@@ -295,7 +335,7 @@ def ubah_monster(monster_shop_data:list[dict], monster_data:list[dict]):
             if data['id'] == Id:
                 nama = data['type']
                 
-        print("Pembaharuan data berhasil dilakukan pada monster ", nama, " dan harga baru ", harga_baru)
+        print("Pembaharuan data berhasil dilakukan pada monster ", nama, " dengan harga baru ", harga_baru)
 
     elif stok_baru != "":
         for subdata in monster_shop_data:
@@ -306,7 +346,7 @@ def ubah_monster(monster_shop_data:list[dict], monster_data:list[dict]):
             if data['id'] == Id:
                 nama = data['type']
                 
-        print("Pembaharuan data berhasil dilakukan pada monster ", nama, " dan stok baru ", stok_baru)
+        print("Pembaharuan data berhasil dilakukan pada monster ", nama, " dengan stok baru ", stok_baru)
     else:
         print('Tidak ada perubahan')
     delay()
@@ -329,48 +369,45 @@ def ubah_potion(item_shop_list:list[dict],item_shop_data:list[dict]) :
         delay()
         return ubah_potion(item_shop_list,item_shop_data)
     
-    stok_baru = get_numeric_input("Masukkan stok baru potion : ")
-    harga_baru = get_numeric_input("Masukkan harga baru potion : ")
+    stok_baru = get_numeric_input_boleh_kosong("Masukkan stok baru potion : ", allow_empty=True)
+    harga_baru = get_numeric_input_boleh_kosong("Masukkan harga baru potion : ", allow_empty=True)
 
-    if Id > len(item_shop_list):
-        print("Maaf, potion saat ini hanya sampai dengan ", (len(item_shop_list)))
-    elif Id <= len(item_shop_list):
-        if stok_baru != "" and harga_baru != "" :
-            for data in item_shop_list:
-                if data['id'] == Id:
-                    name_potion = data['type']
-                    for subdata in item_shop_data:
-                        if name_potion == subdata['type']:
-                            nama_potion = subdata['type']
-                            subdata['stock'] = str(stok_baru)
-                            subdata['price'] = str(harga_baru)
+    if stok_baru != "" and harga_baru != "" :
+        for data in item_shop_list:
+            if data['id'] == Id:
+                name_potion = data['type']
+                for subdata in item_shop_data:
+                    if name_potion == subdata['type']:
+                        nama_potion = subdata['type']
+                        subdata['stock'] = str(stok_baru)
+                        subdata['price'] = str(harga_baru)
+                
+        print("Pembaharuan data berhasil dilakukan pada potion jenis ", nama_potion, " dengan stok baru berjumlah ", stok_baru, " dan harga baru ", harga_baru)
+
+    elif harga_baru != "" :
+        for data in item_shop_list:
+            if data['id'] == Id:
+                name_potion = data['type']
+                for subdata in item_shop_data:
+                    if name_potion == subdata['type']:
+                        nama_potion = subdata['type']
+                        subdata['price'] = str(harga_baru)
+        print("Pembaharuan data berhasil dilakukan pada potion jenis ", nama_potion, " dengan harga baru ", harga_baru)
+
+    elif stok_baru != "" :
+        for data in item_shop_list:
+            if data['id'] == Id:
+                name_potion = data['type']
+                for subdata in item_shop_data:
+                    if name_potion == subdata['type']:
+                        nama_potion = subdata['type']
+                        subdata['stock'] = str(stok_baru)
                     
-            print("Pembaharuan data berhasil dilakukan pada potion jenis ", nama_potion, " dengan stok baru berjumlah ", stok_baru, " dan harga baru ", harga_baru)
-
-        elif harga_baru != "" :
-            for data in item_shop_list:
-                if data['id'] == Id:
-                    name_potion = data['type']
-                    for subdata in item_shop_data:
-                        if name_potion == subdata['type']:
-                            nama_potion = subdata['type']
-                            subdata['price'] = str(harga_baru)
-            print("Pembaharuan data berhasil dilakukan pada potion jenis ", nama_potion, " dengan harga baru ", harga_baru)
-
-        elif stok_baru != "" :
-            for data in item_shop_list:
-                if data['id'] == Id:
-                    name_potion = data['type']
-                    for subdata in item_shop_data:
-                        if name_potion == subdata['type']:
-                            nama_potion = subdata['type']
-                            subdata['stock'] = str(stok_baru)
-                        
-            print("Pembaharuan data berhasil dilakukan pada monster ", nama_potion, " dengan stok baru ", stok_baru)
-        
-        else:
-            print('Tidak ada perubahan')
-        delay()
+        print("Pembaharuan data berhasil dilakukan pada monster ", nama_potion, " dengan stok baru ", stok_baru)
+    
+    else:
+        print('Tidak ada perubahan')
+    delay()
 ################################################## FUNGSI UNTUK MENGUBAH DATA ######################################################### 
 
 
@@ -507,6 +544,22 @@ def get_numeric_input(prompt:str):
             return str(value)
         except ValueError:
             print("Input harus berupa angka. Silakan coba lagi.")
+
+def get_numeric_input_boleh_kosong(prompt: str, allow_empty: bool = False)-> str :
+    '''
+    Fungsi untuk mengecek apakah input merupakan valid integer atau tidak.
+    Jika allow_empty bernilai True, input kosong juga dianggap valid.
+    '''
+    while True:
+        user_input = input(prompt)
+        if allow_empty and user_input == "":
+            return user_input
+        try:
+            value = int(user_input)
+            return str(value)
+        except ValueError:
+            print("Input harus berupa angka. Silakan coba lagi.")
+
 ################################################## OTHER UTILITIES #########################################################
 
 if __name__ == '__main__':
