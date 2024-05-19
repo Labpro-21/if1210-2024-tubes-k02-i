@@ -462,8 +462,17 @@ def hapus_potion(item_shop_list:list[dict], item_shop_data:list[dict]):
     '''
     lihat_potion(item_shop_list)
     
+    ids_list = []
+    for data in item_shop_list:
+        ids_list.append(data['id'])
+
     Id = get_numeric_input("Pilih ID potion yang ingin dihapus : ")
     
+    if Id not in ids_list:
+        print('Tidak tersedia id tersebut, pilih id yang lain.')
+        delay()
+        return hapus_monster(monster_shop_data, monster_data)
+
     for data in item_shop_list:
         if data['id'] == str(Id):
             type_potion = data['type']
@@ -528,7 +537,7 @@ def delay():
     '''
     Membuat delay pada screen dan clear screen di terminal
     '''
-    time.sleep(1)
+    time.sleep(3)
     if os.name == 'nt':  # For Windows
         os.system('cls')
     else:  # For Unix/Linux/Mac
@@ -541,10 +550,7 @@ def get_numeric_input(prompt:str):
     while True:
         try:
             value = int(input(prompt))
-            if value >= 0:
-                return str(value)
-            else:
-                print('Input harus berupa bilangan positif! Ulangi!')
+            return str(value)
         except ValueError:
             print("Input harus berupa angka. Silakan coba lagi.")
 
@@ -559,10 +565,7 @@ def get_numeric_input_boleh_kosong(prompt: str, allow_empty: bool = False)-> str
             return user_input
         try:
             value = int(user_input)
-            if value > 0:
-                return str(value)
-            else:
-                print('Input harus berupa bilangan positif! Ulangi')
+            return str(value)
         except ValueError:
             print("Input harus berupa angka. Silakan coba lagi.")
 
