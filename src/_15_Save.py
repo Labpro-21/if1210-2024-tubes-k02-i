@@ -6,12 +6,6 @@ def save(user:list[dict], item_inventories:list[dict], item_shop:list[dict], mon
     """
     memeriksa apakah folder yang dimaksud sudah ada dan akan membuat folder baru jika belum serta menyimpan file csv ke folder tersebut
     """
-    forbid_name = [
-    "CON", "PRN", "AUX", "NUL",
-    "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "COM0",
-    "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9", "LPT0"
-    ]
-    forbid_char = []
     # Tentukan folder utama sebagai "data"
     parent_folder= "data"
     # Menerima data sebagai list atau dictionary
@@ -24,7 +18,7 @@ def save(user:list[dict], item_inventories:list[dict], item_shop:list[dict], mon
         # Buat parent folder jika belum ada
         os.makedirs(parent_folder)
     # Periksa apakah folder sudah ada
-   
+    
     if not  os.path.exists(folder):
         print(f"Membuat folder {folder}.")
         # Buat folder baru
