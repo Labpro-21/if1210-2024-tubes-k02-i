@@ -81,7 +81,7 @@ def tambah_monster_baru(monster_list:list[dict]):
         try:
             defense = int(input("DEF Power Monster Baru (0-50) : "))
             if 0 <= defense <= 50:
-                break  # Exit the loop if defense is within the valid range
+                break 
             else:
                 print("Def Power Monster harus bernilai 0-50...")
                 print("Silakan coba lagi!")
@@ -90,7 +90,11 @@ def tambah_monster_baru(monster_list:list[dict]):
     while True:
         try:
             hp = int(input("Nilai HP Monster Baru: "))
-            break  # Exit the loop if defense is within the valid range
+            if hp >= 0 :
+                break 
+            else:
+                print("HP Monster harus bernilai bilangan positif")
+                print("Silakan coba lagi!")
         except ValueError:
             print("Input harus berupa bilangan bulat!")
     
@@ -109,12 +113,13 @@ def tambah_monster_ke_database(monster_list:list[dict],monster_baru:dict):
     if pilihan.lower() == "y" :
         print("Monster baru berhasil ditambahkan ke database!")
         monster_list.append(monster_baru)
+        return pilihan_monster_management(monster_list)
     elif pilihan.lower() == "n" :
         print("Monster baru gagal ditambahkan ke database!")
         return pilihan_monster_management(monster_list)
     else:
-        print('Perintah anda salah')
-        return pilihan_monster_management(monster_list)
+        print('Perintah anda salah, pilih (Y atau N)')
+        return tambah_monster_ke_database(monster_list,monster_baru)
     
 def count_char_max(data_list:list[dict[str,str]], kolom:str, header:str):
     '''
