@@ -141,8 +141,12 @@ def beli_potion(username:str, monster_shop_data:list[dict] , item_shop_data:list
         print('Id tidak tersedia, silahkan coba id yang lain.')
         delay()
         return shop_currency_page(username, monster_shop_data , item_shop_data , potion_data, monster_inventory_data , item_inventory , monster_data , user_data)
-    
-    qty = int(input('Masukkan jumlah: '))
+    while True:
+        try:
+            qty = int(input('Masukkan jumlah: '))
+            break
+        except ValueError:
+            print('Input harus berupa bilangan bulat! Ulangi')
     for data in potion_data:
         for subdata in item_shop_data:
             if item_id == data['id'] and data['potion_name'] == subdata['type']:
@@ -189,6 +193,7 @@ def count_char_max(data_list:list[dict[str,str]], kolom:str, header:str):
         if len(data_list[i][kolom]) > char_max:
             char_max = len(data_list[i][kolom])
     return char_max
+
 def lihat_monster(monster_shop_data:list[dict], monster_data:list[dict]):
     '''
     Fungsi untuk melihat monster
