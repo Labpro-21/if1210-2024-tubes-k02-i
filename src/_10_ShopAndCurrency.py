@@ -144,7 +144,10 @@ def beli_potion(username:str, monster_shop_data:list[dict] , item_shop_data:list
     while True:
         try:
             qty = int(input('Masukkan jumlah: '))
-            break
+            if qty > 0:
+                break
+            else:
+                print('Input harus bilangan positif dan lebih dari 0!')
         except ValueError:
             print('Input harus berupa bilangan bulat! Ulangi')
     for data in potion_data:
