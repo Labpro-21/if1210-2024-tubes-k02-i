@@ -537,7 +537,7 @@ def delay():
     '''
     Membuat delay pada screen dan clear screen di terminal
     '''
-    time.sleep(3)
+    time.sleep(1)
     if os.name == 'nt':  # For Windows
         os.system('cls')
     else:  # For Unix/Linux/Mac
@@ -550,7 +550,10 @@ def get_numeric_input(prompt:str):
     while True:
         try:
             value = int(input(prompt))
-            return str(value)
+            if value >= 0:
+                return str(value)
+            else:
+                print('Input harus berupa bilangan positif! Ulangi!')
         except ValueError:
             print("Input harus berupa angka. Silakan coba lagi.")
 
@@ -565,7 +568,10 @@ def get_numeric_input_boleh_kosong(prompt: str, allow_empty: bool = False)-> str
             return user_input
         try:
             value = int(user_input)
-            return str(value)
+            if value > 0:
+                return str(value)
+            else:
+                print('Input harus berupa bilangan positif! Ulangi')
         except ValueError:
             print("Input harus berupa angka. Silakan coba lagi.")
 
