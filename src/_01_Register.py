@@ -3,7 +3,6 @@ import os
 dirname = os.path.dirname(__file__)
 from GameState import game_state
 
-# KAMUS
 def validate_username(username: str)->bool:
     '''
     Memvalidasi username
@@ -36,7 +35,7 @@ def choose_monster(monster_data: list[str],username:str):
         return choose_monster(monster_data)
     
     
-def check_register(username: str, password:str, user_data:list[dict])->bool:
+def check_register(username: str, password:str, user_data:list[dict])->tuple[str,str]:
     '''
     Meregister username dan memvalidasinya
     '''

@@ -568,7 +568,7 @@ def get_numeric_input_boleh_kosong(prompt: str, allow_empty: bool = False)-> str
             return user_input
         try:
             value = int(user_input)
-            if value > 0:
+            if value >= 0:
                 return str(value)
             else:
                 print('Input harus berupa bilangan positif! Ulangi')
