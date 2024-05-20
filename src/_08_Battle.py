@@ -36,19 +36,20 @@ def battle(username:str, monster_data:list[dict], monster_inventory_data:list[di
 
     # Mengeluarkan ASCII art monster musuh
     print(r'''
-            /\----/\_   
-            /         \   /|
-            |  | O    O | / |
-            |  | .vvvvv.|/  /
-        /   | |     |   /
-        /    | `^^^^^   /
-        | /|  |         /
-        / |    ___    |
-            \  |   |   |
-            |  |   |   |
-            \._\   \._\ 
+          /\----/\_   
+         /         \   /|
+        |  | O    O | / |
+        |  | .vvvvv.|/  /
+       /   | |     |   /
+      /    | `^^^^^   /
+     | /|  |         /
+      / |    ___    |
+         \  |   |   |
+         |  |   |   |
+          \._\   \._\ 
 
-        ''')
+      ''')
+    
         
 
     # Mengeluarkan deskripsi monster musuh
@@ -88,20 +89,20 @@ def battle(username:str, monster_data:list[dict], monster_inventory_data:list[di
 
     # Mengeluarkan ASCII art monster user
     print(r'''
-            _/\----/\\   
-            /         \\     /\\
-            |  O    O   |   |  |
-            |  .vvvvv.  |   |  |
-            /  |     |   \\  |  |
-            /   `^^^^^'    \\ |  |
-        ./  /|            \\|  |_
-        /   / |         |\\__     /
-        \\  /  |         |   |__|
-        `'   |  _      |
-            _.-'-' `-'-'.'_
-    __.-'               '-.__
+           _/\----/\\   
+          /         \\     /\\
+         |  O    O   |   |  |
+         |  .vvvvv.  |   |  |
+         /  |     |   \\  |  |
+        /   `^^^^^'    \\ |  |
+      ./  /|            \\|  |_
+     /   / |         |\\__     /
+     \\  /  |         |   |__|
+      `'   |  _      |
+        _.-'-' `-'-'.'_
+   __.-'               '-.__
 
-        ''')
+      ''')
 
     # Mengeluarkan deskripsi monster user
     print_hp_bar(user_monster_choice_name, user_monster_choice_health_power, user_monster_choice_health_power_max)
@@ -172,19 +173,20 @@ def battle(username:str, monster_data:list[dict], monster_inventory_data:list[di
             # Deskripsi penyerangan dan dampak pada monster musuh
             print(f'SKADIDODOO, {user_monster_choice_name} menyerang {monster_enemy_name} !!!\n')
             print(r'''
-    /\----/\_   
-    /         \   /|
-    |  | O    O | / |
-    |  | .vvvvv.|/  /
-/   | |     |   /
-/    | `^^^^^   /
-| /|  |         /
-/ |    ___    |
-    \  |   |   |
-    |  |   |   |
-    \._\   \._\ 
+          /\----/\_   
+         /         \   /|
+        |  | O    O | / |
+        |  | .vvvvv.|/  /
+       /   | |     |   /
+      /    | `^^^^^   /
+     | /|  |         /
+      / |    ___    |
+         \  |   |   |
+         |  |   |   |
+          \._\   \._\ 
 
-''')
+      ''')
+    
             print_hp_bar(monster_enemy_name, health_monster_enemy, health_monster_enemy_max)
             print(f'Name : {monster_enemy_name}\nATK Power : {attack_power_monster_enemy}\nDEF Power : {defense_power_monster_enemy}\nHP : {health_monster_enemy}\nLevel : {level_monster_enemy}\n')
             print(f'# Penjelasan: ATT: {attack_user_rng}, Reduced by: {defense_user_rng}, ATT Results: {reduced_attack_user}\n')
@@ -213,20 +215,20 @@ def battle(username:str, monster_data:list[dict], monster_inventory_data:list[di
             # Deskripsi penyerangan dan dampak pada monster user    
             print(f'SKADLIDODOR, {monster_enemy_name} menyerang {user_monster_choice_name} !!!\n')
             print(r'''
-    _/\----/\\   
-    /         \\     /\\
-    |  O    O   |   |  |
-    |  .vvvvv.  |   |  |
-    /  |     |   \\  |  |
-    /   `^^^^^'    \\ |  |
-./  /|            \\|  |_
-/   / |         |\\__     /
-\\  /  |         |   |__|
-`'   |  _      |
-    _.-'-' `-'-'.'_
-__.-'               '-.__
+           _/\----/\\   
+          /         \\     /\\
+         |  O    O   |   |  |
+         |  .vvvvv.  |   |  |
+         /  |     |   \\  |  |
+        /   `^^^^^'    \\ |  |
+      ./  /|            \\|  |_
+     /   / |         |\\__     /
+     \\  /  |         |   |__|
+      `'   |  _      |
+        _.-'-' `-'-'.'_
+   __.-'               '-.__
 
-''')
+      ''')
             print_hp_bar(user_monster_choice_name, user_monster_choice_health_power, user_monster_choice_health_power_max)
             print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
             print(f'# Penjelasan: ATT: {attack_enemy_rng}, Reduced by: {defense_enemy_rng}, ATT Results: {reduced_attack_enemy}\n')
