@@ -23,8 +23,13 @@ def choose_monster(monster_data: list[str],username:str):
     
     ids = []
     for monster in monster_data:
-        ids.append(int(monster['id']))   
-    monster_id = int(input('Monster pilihanmu: '))
+        ids.append(int(monster['id'])) 
+    while True:
+        try:
+            monster_id = int(input('Monster pilihanmu: '))
+            break
+        except ValueError:
+            print('Input anda salah! Ulangi!')
     
     if monster_id in ids:
         print(f"Selamat datang agent {username}. Mari kita mengalahkan Dr. Asep Spakbor dengan {monster_data[monster_id-1]['type']}!")
@@ -32,7 +37,7 @@ def choose_monster(monster_data: list[str],username:str):
     
     else: 
         print('Monster pilihan anda tidak ada, silahkan pilih kembali.')
-        return choose_monster(monster_data)
+        return choose_monster(monster_data, username)
     
     
 def check_register(username: str, password:str, user_data:list[dict])->tuple[str,str]:
@@ -67,7 +72,7 @@ def register_page(game_state: int, username:str, monster_data:list[dict], monste
     if game_state == 0:
         username, password = user_input(user_data)
         if username:
-            monster_id = choose_monster(monster_data,username)
+            monster_id = choose_monster(monster_data, username)
             user_data.append({'id': str(len(user_data)+1),'username':username,'password':password,'role':'agent','oc':f'0'})
             monster_inventory.append({'user_id': str(len(user_data)),'monster_id':f'{monster_id}','level':'1'})
             # CSVfunction.write_csv(user_data_path, f'{len(user_data)+1};{username};{password};agent;{0}\n')

@@ -22,13 +22,13 @@ def arena(username:str, monster_data:list[dict], monster_inventory_data:list[dic
             print(f'{index}. {data["type"]}, Level = {data["level"]}')
             monster_ids.append(str(index))
             
-    # User memanggil monster yang tersedia dan memanggil fungsi is_include
+    # User memanggil monster
     user_monster_choice = input('Pilih monster untuk bertarung: ')
 
     # Looping terjadi apabila inputan user_monster_choice tidak sesuai dalam range
     while user_monster_choice not in monster_ids:
         print('''Pilihan monster tidak tersedia! Coba lagi!\n''')
-        user_monster_choice = input('Pilih monster untuk bertarung: ')# Looping menghasilkan input baru untuk diperiksa dalam fungsi is_include hingga berhasil
+        user_monster_choice = input('Pilih monster untuk bertarung: ')
 
 
     user_monster_choice_list = player_inventory[int(user_monster_choice)-1]
