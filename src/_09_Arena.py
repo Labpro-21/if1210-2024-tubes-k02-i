@@ -94,21 +94,20 @@ def arena(username:str, monster_data:list[dict], monster_inventory_data:list[dic
         print(f'''RAWRRR, Agent {username} mengeluarkan monster {user_monster_choice_name} !!!\n''')
         # Mengeluarkan ASCII art monster user
         print(r'''
-                _/\----/\\   
-                /         \\     /\\
-                |  O    O   |   |  |
-                |  .vvvvv.  |   |  |
-                /  |     |   \\  |  |
-                /   `^^^^^'    \\ |  |
-            ./  /|            \\|  |_
-            /   / |         |\\__     /
-            \\  /  |         |   |__|
-            `'   |  _      |
-                _.-'-' `-'-'.'_
-        __.-'               '-.__
+           _/\----/\\   
+          /         \\     /\\
+         |  O    O   |   |  |
+         |  .vvvvv.  |   |  |
+         /  |     |   \\  |  |
+        /   `^^^^^'    \\ |  |
+      ./  /|            \\|  |_
+     /   / |         |\\__     /
+     \\  /  |         |   |__|
+      `'   |  _      |
+        _.-'-' `-'-'.'_
+   __.-'               '-.__
 
-            ''')
-
+      ''')
         # Mengeluarkan deskripsi monster user
         print_hp_bar(user_monster_choice_name, user_monster_choice_health_power, user_monster_choice_health_power_max)
         print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
@@ -117,20 +116,19 @@ def arena(username:str, monster_data:list[dict], monster_inventory_data:list[dic
 
         # Mengeluarkan ASCII art monster musuh
         print(r'''
-            /\----/\_   
-            /         \   /|
-            |  | O    O | / |
-            |  | .vvvvv.|/  /
-        /   | |     |   /
-        /    | `^^^^^   /
-        | /|  |         /
-        / |    ___    |
-            \  |   |   |
-            |  |   |   |
-            \._\   \._\ 
+          /\----/\_   
+         /         \   /|
+        |  | O    O | / |
+        |  | .vvvvv.|/  /
+       /   | |     |   /
+      /    | `^^^^^   /
+     | /|  |         /
+      / |    ___    |
+         \  |   |   |
+         |  |   |   |
+          \._\   \._\ 
 
-        ''')
-        
+      ''')
         # Mengeluarkan deskripsi monster musuh
         print_hp_bar(monster_enemy_name, health_monster_enemy, health_monster_enemy_max)
         print(f'Name : {monster_enemy_name}\nATK Power : {attack_power_monster_enemy}\nDEF Power : {defense_power_monster_enemy}\nHP : {health_monster_enemy}\nLevel : {level_monster_enemy}\n')
@@ -167,19 +165,19 @@ def arena(username:str, monster_data:list[dict], monster_inventory_data:list[dic
                     win = True # Jika HP monster musuh sudah 0
                 # delay()
                 print(r'''
-            /\----/\_   
-            /        \   /|
-            |  | O    O | / |
-            |  | .vvvvv.|/  /
-        /   | |     |   /
-        /    | `^^^^^   /
-        | /|  |         /
-        / |    ___    |
-            \  |   |   |
-            |  |   |   |
-            \._\   \._\ 
+          /\----/\_   
+         /         \   /|
+        |  | O    O | / |
+        |  | .vvvvv.|/  /
+       /   | |     |   /
+      /    | `^^^^^   /
+     | /|  |         /
+      / |    ___    |
+         \  |   |   |
+         |  |   |   |
+          \._\   \._\ 
 
-        ''')
+      ''')
 
                 print(f'SKADIDODOO, {user_monster_choice_name} menyerang {monster_enemy_name} !!!\n')
                 print_hp_bar(monster_enemy_name, health_monster_enemy, health_monster_enemy_max)
@@ -207,20 +205,20 @@ def arena(username:str, monster_data:list[dict], monster_inventory_data:list[dic
                     
                 # Deskripsi penyerangan dan dampak pada monster user
                 print(r'''
-                    _/\----/\\   
-                    /         \\     /\\
-                    |  O    O   |   |  |
-                    |  .vvvvv.  |   |  |
-                    /  |     |   \\  |  |
-                    /   `^^^^^'    \\ |  |
-                ./  /|            \\|  |_
-                /   / |         |\\__     /
-                \\  /  |         |   |__|
-                `'   |  _      |
-                    _.-'-' `-'-'.'_
-            __.-'               '-.__
+           _/\----/\\   
+          /         \\     /\\
+         |  O    O   |   |  |
+         |  .vvvvv.  |   |  |
+         /  |     |   \\  |  |
+        /   `^^^^^'    \\ |  |
+      ./  /|            \\|  |_
+     /   / |         |\\__     /
+     \\  /  |         |   |__|
+      `'   |  _      |
+        _.-'-' `-'-'.'_
+   __.-'               '-.__
 
-                ''')
+      ''')
                 print(f'SKADLIDODOR, {monster_enemy_name} menyerang {user_monster_choice_name} !!!\n')
                 print_hp_bar(user_monster_choice_name, user_monster_choice_health_power, user_monster_choice_health_power_max)
                 print(f'Name : {user_monster_choice_name}\nATK Power : {user_monster_choice_attack_power}\nDEF Power : {user_monster_choice_defense_power}\nHP : {user_monster_choice_health_power}\nLevel : {user_monster_level}\n')
@@ -358,11 +356,11 @@ def print_hp_bar(name:str, hp:int, max_hp:int, bar_length=50):
     """
     Mengeprint bar hp monster
     """   
-    # Calculate the number of bar segments to be filled
+    # Menghitung bar yang terisi
     filled_length = int(bar_length * hp / max_hp)
     bar = '█' * filled_length + '-' * (bar_length - filled_length)
     
-    # Print the health bar
+    # Print health bar
     print(f"{name} HP: [{bar}] {hp}/{max_hp}")
     
 def delay():
@@ -370,9 +368,9 @@ def delay():
     Membuat delay pada screen dan clear screen di terminal
     '''
     time.sleep(3)
-    if os.name == 'nt':  # For Windows
+    if os.name == 'nt':  # Untuk Windows
         os.system('cls')
-    else:  # For Unix/Linux/Mac
+    else:  # Untuk Unix/Linux/Mac
         os.system('clear')
 
 if __name__ == '__main__':
