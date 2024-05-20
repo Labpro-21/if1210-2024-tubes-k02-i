@@ -307,11 +307,7 @@ __.-'               '-.__
 
     update_user_data(username, item_inventory, user_data, strength_qty, resilience_qty, healing_qty, coin)
             
-def is_include(user_monster_choice: int, idx: int) -> int :
-    '''
-    Fungsi untuk mengembalikan pilihan monster di range yang tersedia
-    '''
-    return 0 < user_monster_choice <= idx
+
 def atribute_by_level(atribute:int, level:int):
     '''
     Menyesuaikan atribut monster berdasarkan level
